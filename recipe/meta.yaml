@@ -13,7 +13,7 @@ source:
      - cudaPointerAttributes.patch  # [cuda_compiler_version in ("11.0", "11.1")]
 
 build:
-  number: 0
+  number: 1
   skip: True  # [not linux64 or cuda_compiler_version=="None"]
 
 requirements:
