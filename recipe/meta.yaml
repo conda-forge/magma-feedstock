@@ -10,7 +10,6 @@ source:
   patches:
     - cmakelists.patch
     - thread_queue.patch
-    - cudaPointerAttributes.patch   # [cuda_compiler_version in ("11.0", "11.1")]
 
 build:
   number: 0
