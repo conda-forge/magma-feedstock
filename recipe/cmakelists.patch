@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 9fdccb2..40c41d5 100644
+index f83d986..e2d803b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -119,7 +119,7 @@ if (CUDA_FOUND)
@@ -11,8 +11,8 @@ index 9fdccb2..40c41d5 100644
  
      # nvcc >= 6.5 supports -std=c++11, so propagate CXXFLAGS to NVCCFLAGS.
      # Older nvcc didn't support -std=c++11, so previously we disabled propagation.
-@@ -259,11 +259,18 @@ if (CUDA_FOUND)
-         message( STATUS "    compile for CUDA arch 7.5 (Turing)" )
+@@ -272,11 +272,18 @@ if (CUDA_FOUND)
+         message( STATUS "    compile for CUDA arch 8.0 (Ampere)" )
      endif()
  
 +    if ( ${GPU_TARGET} MATCHES "All")
@@ -22,21 +22,22 @@ index 9fdccb2..40c41d5 100644
 +    endif()
 +
      if (NOT MIN_ARCH)
-         message( FATAL_ERROR "GPU_TARGET must contain one or more of Fermi, Kepler, Maxwell, Pascal, Volta, Turing, or valid sm_[0-9][0-9]" )
+-        message( FATAL_ERROR "GPU_TARGET must contain one or more of Fermi, Kepler, Maxwell, Pascal, Volta, Turing, Ampere, or valid sm_[0-9][0-9]" )
++        message( FATAL_ERROR "GPU_TARGET must contain one or more of Fermi, Kepler, Maxwell, Pascal, Volta, Turing, or valid sm_[0-9][0-9]" )
      endif()
  
--        set( CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -Xcompiler -fPIC -DHAVE_CUBLAS ${NV_SM} ${NV_COMP} ${FORTRAN_CONVENTION} )
-+        set( CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -DHAVE_CUBLAS -Xfatbin -compress-all -Xcompiler -fPIC -std=c++11 ${NV_SM} ${NV_COMP} ${FORTRAN_CONVENTION} )
-+        MESSAGE(STATUS "CUDA_NVCC_FLAGS: ${CUDA_NVCC_FLAGS}")
+-    set( CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -Xcompiler -fPIC -DHAVE_CUBLAS ${NV_SM} ${NV_COMP} ${FORTRAN_CONVENTION} )
++    set( CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -DHAVE_CUBLAS -Xfatbin -compress-all -Xcompiler -fPIC -std=c++11 ${NV_SM} ${NV_COMP} ${FORTRAN_CONVENTION} )
++    MESSAGE(STATUS "CUDA_NVCC_FLAGS: ${CUDA_NVCC_FLAGS}")
      add_definitions( "-DHAVE_CUBLAS -DMIN_CUDA_ARCH=${MIN_ARCH}" )
      message( STATUS "Define -DHAVE_CUBLAS -DMIN_CUDA_ARCH=${MIN_ARCH}" )
  endif()
-@@ -551,7 +558,7 @@ install( TARGETS magma magma_sparse ${blas_fix}
-          LIBRARY DESTINATION lib
+@@ -580,7 +587,7 @@ install( TARGETS magma magma_sparse ${blas_fix}
           ARCHIVE DESTINATION lib )
  file( GLOB headers include/*.h sparse/include/*.h )
--install( FILES ${headers} ${modules}
-+install( FILES ${headers}
-          DESTINATION include )
- 
- # ----------------------------------------
+ if (USE_FORTRAN)
+-    install( FILES ${headers} ${modules}
++    install( FILES ${headers}
+              DESTINATION include )
+ else()
+     install( FILES ${headers} DESTINATION include )

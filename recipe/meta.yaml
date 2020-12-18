@@ -1,20 +1,19 @@
-{% set version = "2.5.2" %}
+{% set version = "2.5.4" %}
 
 package:
   name: magma
   version: {{ version }}
 
 source:
-   url: http://icl.utk.edu/projectsfiles/magma/downloads/magma-{{ version }}.tar.gz
-   sha256: 065feb85558f9dd6f4cc4db36ac633a3f787827fc832d0b578a049a43a195620
-   patches:
-     - cmakelists.patch
-     - thread_queue.patch
-     - cudaPointerAttributes.patch  # [cuda_compiler_version in ("11.0", "11.1")]
+  url: http://icl.utk.edu/projectsfiles/magma/downloads/magma-{{ version }}.tar.gz
+  sha256: 7734fb417ae0c367b418dea15096aef2e278a423e527c615aab47f0683683b67
+  patches:
+    - cmakelists.patch
+    - thread_queue.patch
 
 build:
   number: 0
-  skip: True  # [not linux64 or cuda_compiler_version=="None"]
+  skip: true  # [not linux64 or cuda_compiler_version=="None"]
 
 requirements:
   build:
