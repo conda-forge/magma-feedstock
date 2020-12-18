@@ -12,7 +12,7 @@ source:
     - thread_queue.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [not linux64 or cuda_compiler_version=="None"]
 
 requirements:
