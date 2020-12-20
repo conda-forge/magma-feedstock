@@ -22,8 +22,10 @@ requirements:
     - {{ compiler('cuda') }}
     - cmake
     - make  # [unix]
+    - jom  # [win]
     - libgomp  # [linux]
-    - llvm-openmp  # [osx]
+    - llvm-openmp  # [osx or win]
+    - m2-sed  # [win]
   host:
     - liblapack
     - libblas
@@ -32,6 +34,8 @@ test:
   commands:
     - test -f $PREFIX/include/magma.h  # [unix]
     - test -f $PREFIX/lib/libmagma${SHLIB_EXT}   # [unix]
+    - if not exist %LIBRARY_PREFIX%\include\magma.h exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\lib\libmagma.lib exit 1  # [win]
 
 about:
   home: http://icl.cs.utk.edu/magma/software/index.html
