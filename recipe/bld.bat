@@ -33,7 +33,8 @@ cmake.exe %CMAKE_ARGS% .. ^
   -DCUDA_ARCH_LIST="%CUDA_ARCH_LIST%" ^
   -DCUDA_TOOLKIT_INCLUDE="%CUDA_HOME%\include" ^
   -DLAPACK_LIBRARIES="%LIBRARY_PREFIX%\lib\lapack.lib;%LIBRARY_PREFIX%\lib\blas.lib" ^
-  -DCMAKE_BUILD_TYPE=Release
+  -DCMAKE_BUILD_TYPE=Release ^
+  -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON
 if errorlevel 1 exit 1
 
 jom -j%CPU_COUNT% VERBOSE=1
