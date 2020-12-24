@@ -10,6 +10,7 @@ source:
   patches:
     - cmakelists.patch
     - thread_queue.patch
+    - dllexport.patch
 
 build:
   number: 1
