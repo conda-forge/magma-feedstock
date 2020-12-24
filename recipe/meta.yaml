@@ -11,6 +11,7 @@ source:
     - cmakelists.patch
     - thread_queue.patch
     - dllexport.patch
+    - fix_macro_win.patch
 
 build:
   number: 1
