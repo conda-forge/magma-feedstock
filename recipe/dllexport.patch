@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f83d986..87e3d03 100644
+index f83d986..ed4595e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -438,6 +438,7 @@ if (WIN32)
@@ -10,6 +10,15 @@ index f83d986..87e3d03 100644
  
      # no Fortran files at the moment (how to test libmagma_all_f is not empty?),
      # but keep this around for future reference.
+@@ -504,7 +505,7 @@ target_link_libraries( lapacktest
+ 
+ # ----------------------------------------
+ # compile tester library
+-add_library( tester ${libtest_all} )
++add_library( tester STATIC ${libtest_all} )
+ target_link_libraries( tester
+     magma
+     lapacktest
 diff --git a/include/magma_c.h b/include/magma_c.h
 index c59a0a2..496dd8d 100644
 --- a/include/magma_c.h
