@@ -21,7 +21,7 @@ index 2051a6d..553448e 100644
  include_directories( testing )
 -cuda_add_library( magma_sparse ${libsparse_all} )
 +if (BUILD_SPARSE)
-+cuda_add_library( magma_sparse ${libsparse_all} EXCLUDE_FROM_ALL)
++cuda_add_library( magma_sparse ${libsparse_all} )
  target_link_libraries( magma_sparse
      magma
      ${blas_fix}
