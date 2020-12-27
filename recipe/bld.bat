@@ -34,6 +34,7 @@ cmake.exe %CMAKE_ARGS% .. ^
   -DCUDA_TOOLKIT_INCLUDE="%CUDA_HOME%\include" ^
   -DLAPACK_LIBRARIES="%LIBRARY_PREFIX%\lib\lapack.lib;%LIBRARY_PREFIX%\lib\blas.lib" ^
   -DCMAKE_BUILD_TYPE=Release ^
+  -DBUILD_SPARSE=OFF ^
   -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON
 if errorlevel 1 exit 1
 

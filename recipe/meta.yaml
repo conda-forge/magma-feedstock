@@ -12,6 +12,7 @@ source:
     - thread_queue.patch
     - dllexport.patch
     - fix_macro_win.patch
+    - option_to_disable_sparse.patch
 
 build:
   number: 1
