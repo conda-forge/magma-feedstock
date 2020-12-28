@@ -38,7 +38,7 @@ test:
     - test -f $PREFIX/include/magma.h  # [unix]
     - test -f $PREFIX/lib/libmagma${SHLIB_EXT}   # [unix]
     - if not exist %LIBRARY_PREFIX%\include\magma.h exit 1  # [win]
-    - if not exist %LIBRARY_PREFIX%\lib\libmagma.lib exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\lib\magma.lib exit 1  # [win]
 
 about:
   home: http://icl.cs.utk.edu/magma/software/index.html
