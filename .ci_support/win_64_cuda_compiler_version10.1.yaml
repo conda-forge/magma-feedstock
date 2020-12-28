@@ -1,0 +1,18 @@
+c_compiler:
+- vs2017
+channel_sources:
+- conda-forge,defaults
+channel_targets:
+- conda-forge main
+cuda_compiler:
+- nvcc
+cuda_compiler_version:
+- '10.1'
+cxx_compiler:
+- vs2017
+libblas:
+- 3.8 *netlib
+liblapack:
+- 3.8 *netlib
+target_platform:
+- win-64

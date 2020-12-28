@@ -10,10 +10,13 @@ source:
   patches:
     - cmakelists.patch
     - thread_queue.patch
+    - dllexport.patch
+    - fix_macro_win.patch
+    - option_to_disable_sparse.patch
 
 build:
   number: 1
-  skip: true  # [not linux64 or cuda_compiler_version=="None"]
+  skip: true  # [cuda_compiler_version=="None"]
 
 requirements:
   build:
@@ -22,8 +25,10 @@ requirements:
     - {{ compiler('cuda') }}
     - cmake
     - make  # [unix]
+    - jom  # [win]
     - libgomp  # [linux]
-    - llvm-openmp  # [osx]
+    - llvm-openmp  # [osx or win]
+    - m2-sed  # [win]
   host:
     - liblapack
     - libblas
@@ -32,6 +37,8 @@ test:
   commands:
     - test -f $PREFIX/include/magma.h  # [unix]
     - test -f $PREFIX/lib/libmagma${SHLIB_EXT}   # [unix]
+    - if not exist %LIBRARY_PREFIX%\include\magma.h exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\lib\magma.lib exit 1  # [win]
 
 about:
   home: http://icl.cs.utk.edu/magma/software/index.html
