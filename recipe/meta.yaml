@@ -15,7 +15,7 @@ source:
     - option_to_disable_sparse.patch
 
 build:
-  number: 1
+  number: 2
   skip: true  # [cuda_compiler_version=="None"]
 
 requirements:
