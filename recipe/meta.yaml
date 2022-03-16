@@ -1,4 +1,4 @@
-{% set version = "2.5.4" %}
+{% set version = "2.6.2" %}
 
 package:
   name: magma
@@ -6,7 +6,7 @@ package:
 
 source:
   url: http://icl.utk.edu/projectsfiles/magma/downloads/magma-{{ version }}.tar.gz
-  sha256: 7734fb417ae0c367b418dea15096aef2e278a423e527c615aab47f0683683b67
+  sha256: ff49ee0b07ab20205667b5af08615b80406c05a2a9a5b5e4c65bcfee8759a6d0
   patches:
     - cmakelists.patch
     - thread_queue.patch
@@ -15,7 +15,7 @@ source:
     - option_to_disable_sparse.patch
 
 build:
-  number: 2
+  number: 0
   skip: true  # [cuda_compiler_version=="None"]
 
 requirements:
