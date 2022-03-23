@@ -6,7 +6,7 @@ package:
 
 source:
   url: http://icl.utk.edu/projectsfiles/magma/downloads/magma-{{ version }}.tar.gz
-  sha256: ff49ee0b07ab20205667b5af08615b80406c05a2a9a5b5e4c65bcfee8759a6d0
+  sha256: f7892a14067d92f73714196e4d76e0354c8dc3da80053612ec98965ce6793627
   patches:
   #   - cmakelists.patch
     - thread_queue.patch
