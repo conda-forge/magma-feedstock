@@ -17,6 +17,8 @@ source:
 build:
   number: 0
   skip: true  # [cuda_compiler_version=="None"]
+  skip: true  # [not linux]
+  skip: true  # [cuda_computer_version!="11.2"]
 
 requirements:
   build:
