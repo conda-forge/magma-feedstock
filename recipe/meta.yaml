@@ -7,12 +7,12 @@ package:
 source:
   url: http://icl.utk.edu/projectsfiles/magma/downloads/magma-{{ version }}.tar.gz
   sha256: ff49ee0b07ab20205667b5af08615b80406c05a2a9a5b5e4c65bcfee8759a6d0
-  patches:
-    - cmakelists.patch
-    - thread_queue.patch
-    - dllexport.patch
-    - fix_macro_win.patch
-    - option_to_disable_sparse.patch
+  # patches:
+  #   - cmakelists.patch
+  #   - thread_queue.patch
+  #   - dllexport.patch
+  #   - fix_macro_win.patch
+  #   - option_to_disable_sparse.patch
 
 build:
   number: 0
