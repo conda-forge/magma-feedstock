@@ -15,7 +15,7 @@ source:
     - option_to_disable_sparse.patch
 
 build:
-  number: 2
+  number: 3
   skip: true  # [cuda_compiler_version=="None"]
 
 requirements:
@@ -23,6 +23,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}
+    - {{ compiler('fortran') }}
     - cmake
     - make  # [unix]
     - jom  # [win]
