@@ -15,8 +15,10 @@ source:
     - option_to_disable_sparse.patch
 
 build:
-  number: 2
+  number: 3
   skip: true  # [cuda_compiler_version=="None"]
+  run_exports:
+    - {{ pin_subpackage('magma', max_pin='x.x.x') }}
 
 requirements:
   build:
@@ -24,8 +26,7 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}
     - cmake
-    - make  # [unix]
-    - jom  # [win]
+    - ninja
     - libgomp  # [linux]
     - llvm-openmp  # [osx or win]
     - m2-sed  # [win]
@@ -37,8 +38,10 @@ test:
   commands:
     - test -f $PREFIX/include/magma.h  # [unix]
     - test -f $PREFIX/lib/libmagma${SHLIB_EXT}   # [unix]
+    - test -f $PREFIX/lib/libmagma_sparse${SHLIB_EXT}   # [unix]
     - if not exist %LIBRARY_PREFIX%\include\magma.h exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\lib\magma.lib exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\magma.dll exit 1  # [win]
 
 about:
   home: http://icl.cs.utk.edu/magma/software/index.html
@@ -48,4 +51,5 @@ about:
 
 extra:
   recipe-maintainers:
-    - isuruf
+    - carterbox
+    - conda-forge/pytorch-cpu
