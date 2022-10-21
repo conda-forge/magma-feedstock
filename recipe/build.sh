@@ -1,3 +1,5 @@
+set -exv
+
 export CMAKE_LIBRARY_PATH=$PREFIX/lib:$PREFIX/include:$CMAKE_LIBRARY_PATH
 export CMAKE_PREFIX_PATH=$PREFIX
 export PATH=$PREFIX/bin:$PATH
@@ -16,13 +18,18 @@ CXXFLAGS="${CXXFLAGS//-std=c++17/-std=c++14}"
 
 mkdir build
 cd build
-cmake ${CMAKE_ARGS} .. \
+
+cmake $SRC_DIR \
+  -G "Ninja" \
+  -DCMAKE_BUILD_TYPE=Release \
   -DUSE_FORTRAN=OFF \
   -DGPU_TARGET="All" \
   -DCMAKE_INSTALL_PREFIX=$PREFIX \
   -DCUDA_ARCH_LIST="$CUDA_ARCH_LIST" \
   -DCUDA_TOOLKIT_INCLUDE=$CUDA_HOME/include \
-  -DLAPACK_LIBRARIES="$PREFIX/lib/liblapack${SHLIB_EXT};${PREFIX}/lib/libblas${SHLIB_EXT}"
+  -DLAPACK_LIBRARIES="$PREFIX/lib/liblapack${SHLIB_EXT};${PREFIX}/lib/libblas${SHLIB_EXT}" \
+  ${CMAKE_ARGS}
 
-make -j${CPU_COUNT} VERBOSE=1
-make install
+cmake --build . -j${CPU_COUNT} --verbose
+
+cmake --install .

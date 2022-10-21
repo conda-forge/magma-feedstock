@@ -2,3 +2,6 @@ conda_forge_output_validation: true
 github:
   branch_name: main
   tooling_branch_name: main
+# PowerPC and ARM not enabled because emulated builds on Azure timeout at 6
+# hours with only 4 percent completed. Native Travis build also became
+# unresponsive and timeout. 2022/10/20 @carterbox
