@@ -24,22 +24,24 @@ cd build
 if errorlevel 1 exit /b 1
 
 :: Must add --use-local-env to NVCC_FLAGS otherwise NVCC autoconfigs the host
-:: compiler to cl.exe instead of the full path
+:: compiler to cl.exe instead of the full path. MSVC does not support full
+:: C++11 standard
+:: https://learn.microsoft.com/en-us/cpp/build/reference/std-specify-language-standard-version?view=msvc-160
 cmake %CMAKE_ARGS% .. ^
   -G "Ninja" ^
-  -DUSE_FORTRAN=OFF ^
-  -DGPU_TARGET="All" ^
+  -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS:BOOL=ON ^
+  -DCMAKE_BUILD_TYPE=Release ^
   -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
   -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
   -DCUDA_ARCH_LIST="%CUDA_ARCH_LIST%" ^
-  -DLAPACK_LIBRARIES="%LIBRARY_PREFIX%\lib\lapack.lib;%LIBRARY_PREFIX%\lib\blas.lib" ^
-  -DCMAKE_BUILD_TYPE=Release ^
+  -DGPU_TARGET="all" ^
+  -DMAGMA_ENABLE_CUDA:BOOL=ON ^
   -DBUILD_SPARSE=OFF ^
-  -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS:BOOL=ON ^
-  -DCUDA_NVCC_FLAGS="--use-local-env"
+  -DUSE_FORTRAN=OFF ^
+  -DCUDA_NVCC_FLAGS="--use-local-env --fatbin"
 if errorlevel 1 exit /b 1
 
-cmake --build . --config Release -j%CPU_COUNT% --verbose
+cmake --build . --config Release -j%CPU_COUNT% --verbose --target magma magma_sparse
 if errorlevel 1 exit /b 1
 
 cmake --install .
