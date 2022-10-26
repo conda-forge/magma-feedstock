@@ -6,10 +6,11 @@ export PATH=$PREFIX/bin:$PATH
 
 export CUDA_ARCH_LIST="-gencode arch=compute_37,code=sm_37 -gencode arch=compute_50,code=sm_50 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_70,code=sm_70"
 
-if [[ "$cuda_compiler_version" == "11.1" || "$cuda_compiler_version" == "11.2" ]]; then
-  CUDA_ARCH_LIST="$CUDA_ARCH_LIST -gencode arch=compute_80,code=sm_80 -gencode arch=compute_86,code=sm_86"
-elif [[ "$cuda_compiler_version" == "11.0" ]]; then
+if awk "BEGIN {exit !($cuda_compiler_version >= 11.0)}"; then
   CUDA_ARCH_LIST="$CUDA_ARCH_LIST -gencode arch=compute_80,code=sm_80"
+fi
+if awk "BEGIN {exit !($cuda_compiler_version >= 11.1)}"; then
+  CUDA_ARCH_LIST="$CUDA_ARCH_LIST -gencode arch=compute_86,code=sm_86"
 fi
 
 # std=c++11 is required to compile some .cu files
