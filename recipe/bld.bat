@@ -12,9 +12,6 @@ if %cuda_compiler_version% ==  "11.0" (
     set "CUDA_ARCH_LIST=%CUDA_ARCH_LIST% -gencode arch=compute_80,code=sm_80"
 )
 
-:: std=c++11 is required to compile some .cu files
-:: TODO: See if that's required on Windows, and how to enable in that case
-
 set CFLAGS=
 set CXXFLAGS=
 set CPPFLAGS=

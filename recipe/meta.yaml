@@ -14,7 +14,6 @@ source:
 build:
   number: 0
   skip: true  # [cuda_compiler_version=="None"]
-  skip: true  # [not win]
   run_exports:
     - {{ pin_subpackage('magma', max_pin='x.x.x') }}
 
@@ -41,6 +40,8 @@ test:
     - if not exist %LIBRARY_PREFIX%\include\magma.h exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\lib\magma.lib exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\bin\magma.dll exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\lib\magma_sparse.lib exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\magma_sparse.dll exit 1  # [win]
 
 about:
   home: http://icl.cs.utk.edu/magma/software/index.html
