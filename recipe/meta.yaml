@@ -15,7 +15,7 @@ source:
     - option_to_disable_sparse.patch
 
 build:
-  number: 3
+  number: 4
   skip: true  # [cuda_compiler_version=="None"]
   run_exports:
     - {{ pin_subpackage('magma', max_pin='x.x.x') }}
