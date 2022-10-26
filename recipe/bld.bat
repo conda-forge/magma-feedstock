@@ -27,7 +27,7 @@ if errorlevel 1 exit /b 1
 :: compiler to cl.exe instead of the full path. MSVC does not support full
 :: C++11 standard
 :: https://learn.microsoft.com/en-us/cpp/build/reference/std-specify-language-standard-version?view=msvc-160
-cmake %CMAKE_ARGS% .. ^
+cmake %SRC_DIR% ^
   -G "Ninja" ^
   -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS:BOOL=ON ^
   -DCMAKE_BUILD_TYPE=Release ^
@@ -36,12 +36,15 @@ cmake %CMAKE_ARGS% .. ^
   -DCUDA_ARCH_LIST="%CUDA_ARCH_LIST%" ^
   -DGPU_TARGET="all" ^
   -DMAGMA_ENABLE_CUDA:BOOL=ON ^
-  -DBUILD_SPARSE=OFF ^
-  -DUSE_FORTRAN=OFF ^
-  -DCUDA_NVCC_FLAGS="--use-local-env --fatbin"
+  -DUSE_FORTRAN:BOOL=OFF ^
+  -DCUDA_NVCC_FLAGS="--use-local-env"
 if errorlevel 1 exit /b 1
 
-cmake --build . --config Release -j%CPU_COUNT% --verbose --target magma magma_sparse
+cmake --build . ^
+    --config Release ^
+    --parallel %CPU_COUNT% ^
+    --target magma magma_sparse ^
+    --verbose
 if errorlevel 1 exit /b 1
 
 cmake --install .

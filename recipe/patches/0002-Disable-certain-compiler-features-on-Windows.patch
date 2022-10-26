@@ -1,0 +1,45 @@
+From 8b13c5578ec12ec663c687b60528aa5bfbc08975 Mon Sep 17 00:00:00 2001
+From: Daniel Ching <carterbox@users.noreply.github.com>
+Date: Wed, 26 Oct 2022 11:42:15 -0500
+Subject: [PATCH 2/2] Disable certain compiler features on Windows
+
+---
+ CMakeLists.txt | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3b9edf1..215d918 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -132,7 +132,13 @@ if (MAGMA_ENABLE_CUDA)
+     set( NV_SM    "" )
+     set( NV_COMP  "" )
+
+-    set(CUDA_SEPARABLE_COMPILATION ON)
++    if(WIN32)
++        # Disable separable compilation on Windows because object linking list
++        # becomes too long and MSVC errors
++        set(CUDA_SEPARABLE_COMPILATION OFF)
++    else()
++        set(CUDA_SEPARABLE_COMPILATION ON)
++    endif()
+
+     # nvcc >= 6.5 supports -std=c++11, so propagate CXXFLAGS to NVCCFLAGS.
+     # Older nvcc didn't support -std=c++11, so previously we disabled propagation.
+@@ -305,7 +311,12 @@ if (MAGMA_ENABLE_CUDA)
+         message( FATAL_ERROR "GPU_TARGET must contain one or more of Fermi, Kepler, Maxwell, Pascal, Volta, Turing, Ampere, or valid sm_[0-9][0-9]" )
+     endif()
+
+-    set( CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -Xcompiler -fPIC ${NV_SM} ${NV_COMP} ${FORTRAN_CONVENTION} )
++    if (WIN32)
++        # No Position Independent Code on Windows. Compiler will complain if you add that flag.
++        set( CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} ${NV_SM} ${NV_COMP} ${FORTRAN_CONVENTION} )
++    else()
++        set( CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -Xcompiler -fPIC ${NV_SM} ${NV_COMP} ${FORTRAN_CONVENTION} )
++    endif(WIN32)
+     MESSAGE(STATUS "CUDA_NVCC_FLAGS: ${CUDA_NVCC_FLAGS}")
+     #add_definitions( "-DMAGMA_HAVE_CUDA -DMAGMA_CUDA_ARCH_MIN=${MIN_ARCH}" )
+     set(MAGMA_HAVE_CUDA "1")
+--
+2.24.0.windows.1
+

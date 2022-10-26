@@ -8,12 +8,13 @@ source:
   url: http://icl.utk.edu/projectsfiles/magma/downloads/magma-{{ version }}.tar.gz
   sha256: 75b554dab00903e2d10b972c913e50e7f88cbc62f3ae432b5a086c7e4eda0a71
   patches:
-    - patches/01-add-all-gpu-target.patch
+    - patches/0001-Add-all-target.patch
+    - patches/0002-Disable-certain-compiler-features-on-Windows.patch
 
 build:
   number: 0
   skip: true  # [cuda_compiler_version=="None"]
-  skip: true  # [win]
+  skip: true  # [not win]
   run_exports:
     - {{ pin_subpackage('magma', max_pin='x.x.x') }}
 
@@ -24,8 +25,9 @@ requirements:
     - {{ compiler('cuda') }}
     - cmake
     - make  # [unix]
+    - ninja  # [win]
     - libgomp  # [linux]
-    - llvm-openmp  # [osx or win]
+    - llvm-openmp  # [osx]
     - m2-sed  # [win]
   host:
     - liblapack
