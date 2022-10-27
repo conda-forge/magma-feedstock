@@ -15,7 +15,7 @@ fi
 
 # Only build recent archs for Power and Arm to reduce build time
 if [[ "$target_platform" == "linux-ppc64le" || "$target_platform" == "linux-aarch64" ]]; then
-  export GPU_TARGET="Volta, Turing, Ampere"
+  export GPU_TARGET="Volta Turing Ampere"
   export CUDA_ARCH_LIST=""
 fi
 
@@ -30,7 +30,7 @@ cmake $SRC_DIR \
   -G "Ninja" \
   -DCMAKE_BUILD_TYPE=Release \
   -DUSE_FORTRAN=OFF \
-  -DGPU_TARGET=$GPU_TARGET \
+  -DGPU_TARGET:STRING="$GPU_TARGET" \
   -DCMAKE_INSTALL_PREFIX=$PREFIX \
   -DCUDA_ARCH_LIST="$CUDA_ARCH_LIST" \
   -DCUDA_TOOLKIT_INCLUDE=$CUDA_HOME/include \
