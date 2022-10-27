@@ -4,12 +4,19 @@ export CMAKE_LIBRARY_PATH=$PREFIX/lib:$PREFIX/include:$CMAKE_LIBRARY_PATH
 export CMAKE_PREFIX_PATH=$PREFIX
 export PATH=$PREFIX/bin:$PATH
 
+export GPU_TARGET="All"
 export CUDA_ARCH_LIST="-gencode arch=compute_37,code=sm_37 -gencode arch=compute_50,code=sm_50 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_70,code=sm_70"
 
 if [[ "$cuda_compiler_version" == "11.1" || "$cuda_compiler_version" == "11.2" ]]; then
   CUDA_ARCH_LIST="$CUDA_ARCH_LIST -gencode arch=compute_80,code=sm_80 -gencode arch=compute_86,code=sm_86"
 elif [[ "$cuda_compiler_version" == "11.0" ]]; then
   CUDA_ARCH_LIST="$CUDA_ARCH_LIST -gencode arch=compute_80,code=sm_80"
+fi
+
+# Only build recent archs for Power and Arm to reduce build time
+if [["$target_platform" == "ppc64le" || "$target_platform" == "aarch64"]]; then
+  export GPU_TARGET="Volta, Turing, Ampere"
+  export CUDA_ARCH_LIST=""
 fi
 
 # std=c++11 is required to compile some .cu files
@@ -23,7 +30,7 @@ cmake $SRC_DIR \
   -G "Ninja" \
   -DCMAKE_BUILD_TYPE=Release \
   -DUSE_FORTRAN=OFF \
-  -DGPU_TARGET="All" \
+  -DGPU_TARGET=$GPU_TARGET \
   -DCMAKE_INSTALL_PREFIX=$PREFIX \
   -DCUDA_ARCH_LIST="$CUDA_ARCH_LIST" \
   -DCUDA_TOOLKIT_INCLUDE=$CUDA_HOME/include \
