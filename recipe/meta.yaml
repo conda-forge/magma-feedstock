@@ -17,6 +17,7 @@ source:
 build:
   number: 3
   skip: true  # [cuda_compiler_version=="None"]
+  skip: true  # [not (ppc64le or aarch64)]
   run_exports:
     - {{ pin_subpackage('magma', max_pin='x.x.x') }}
 
