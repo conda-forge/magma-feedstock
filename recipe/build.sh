@@ -14,7 +14,7 @@ elif [[ "$cuda_compiler_version" == "11.0" ]]; then
 fi
 
 # Only build recent archs for Power and Arm to reduce build time
-if [["$target_platform" == "ppc64le" || "$target_platform" == "aarch64"]]; then
+if [[ "$target_platform" == "*-ppc64le" || "$target_platform" == "*-aarch64" ]]; then
   export GPU_TARGET="Volta, Turing, Ampere"
   export CUDA_ARCH_LIST=""
 fi
