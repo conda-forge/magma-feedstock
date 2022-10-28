@@ -6,5 +6,5 @@ github:
 # hours with only 4 percent completed. Native Travis build also became
 # unresponsive and timeout. 2022/10/20 @carterbox
 provider:
-  linux_ppc64le: default
-  linux_aarch64: default
+  linux_ppc64le: azure
+  linux_aarch64: azure
