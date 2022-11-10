@@ -18,8 +18,9 @@ cd build
 if errorlevel 1 exit /b 1
 
 :: Must add --use-local-env to NVCC_FLAGS otherwise NVCC autoconfigs the host
-:: compiler to cl.exe instead of the full path. MSVC does not support full
-:: C++11 standard
+:: compiler to cl.exe instead of the full path. MSVC does not accept a
+:: C++11 standard argument, and defaults to C++14
+:: https://learn.microsoft.com/en-us/cpp/overview/visual-cpp-language-conformance?view=msvc-160
 :: https://learn.microsoft.com/en-us/cpp/build/reference/std-specify-language-standard-version?view=msvc-160
 cmake %SRC_DIR% ^
   -G "Ninja" ^
