@@ -1,4 +1,4 @@
-{% set version = "2.5.4" %}
+{% set version = "2.6.2" %}
 
 package:
   name: magma
@@ -6,16 +6,13 @@ package:
 
 source:
   url: http://icl.utk.edu/projectsfiles/magma/downloads/magma-{{ version }}.tar.gz
-  sha256: 7734fb417ae0c367b418dea15096aef2e278a423e527c615aab47f0683683b67
+  sha256: 75b554dab00903e2d10b972c913e50e7f88cbc62f3ae432b5a086c7e4eda0a71
   patches:
-    - cmakelists.patch
-    - thread_queue.patch
-    - dllexport.patch
-    - fix_macro_win.patch
-    - option_to_disable_sparse.patch
+    - patches/0001-Add-all-target.patch
+    - patches/0002-Disable-certain-compiler-features-on-Windows.patch
 
 build:
-  number: 4
+  number: 0
   skip: true  # [cuda_compiler_version=="None"]
   run_exports:
     - {{ pin_subpackage('magma', max_pin='x.x.x') }}
@@ -26,9 +23,10 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}
     - cmake
-    - ninja
+    - make  # [unix]
+    - ninja  # [win]
     - libgomp  # [linux]
-    - llvm-openmp  # [osx or win]
+    - llvm-openmp  # [osx]
     - m2-sed  # [win]
   host:
     - liblapack
@@ -42,6 +40,8 @@ test:
     - if not exist %LIBRARY_PREFIX%\include\magma.h exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\lib\magma.lib exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\bin\magma.dll exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\lib\magma_sparse.lib exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\magma_sparse.dll exit 1  # [win]
 
 about:
   home: http://icl.cs.utk.edu/magma/software/index.html
