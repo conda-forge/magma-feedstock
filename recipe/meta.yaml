@@ -1,4 +1,4 @@
-{% set version = "2.6.2" %}
+{% set version = "2.7.0" %}
 
 package:
   name: magma
@@ -6,7 +6,7 @@ package:
 
 source:
   url: http://icl.utk.edu/projectsfiles/magma/downloads/magma-{{ version }}.tar.gz
-  sha256: 75b554dab00903e2d10b972c913e50e7f88cbc62f3ae432b5a086c7e4eda0a71
+  sha256: fda1cbc4607e77cacd8feb1c0f633c5826ba200a018f647f1c5436975b39fd18
   patches:
     - patches/0001-Add-all-target.patch
     - patches/0002-Disable-certain-compiler-features-on-Windows.patch
