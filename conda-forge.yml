@@ -7,4 +7,6 @@ github:
 # unresponsive and timeout. 2022/10/20 @carterbox
 azure:
   # Enable artifact storage to test with GPUs locally
-  store_build_artifacts: True
+  store_build_artifacts: true
+conda_build:
+  pkg_format: '2'
