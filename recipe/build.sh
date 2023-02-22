@@ -1,5 +1,8 @@
 set -exv
 
+# This step is required when building from raw source archive
+make generate --jobs ${CPU_COUNT}
+
 # Duplicate lists because of https://bitbucket.org/icl/magma/pull-requests/32
 export CUDA_ARCH_LIST="sm_35,sm_50,sm_60,sm_61,sm_70,sm_75"
 export CUDAARCHS="35;50;60;61;70;75"
