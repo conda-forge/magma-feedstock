@@ -1,9 +1,5 @@
 @echo on
 
-md .\tmp
-set "TMPDIR=.\tmp"
-if errorlevel 1 exit /b 1
-
 :: This step is required when building from raw source archive
 make generate --jobs %CPU_COUNT%
 if errorlevel 1 exit /b 1

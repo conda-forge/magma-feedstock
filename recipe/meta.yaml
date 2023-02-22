@@ -21,11 +21,13 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}
     - cmake >=3.20
-    - make
-    - ninja
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
-    - m2-sed  # [win]
+    - m2-coreutils  # [win]
+    - m2-make  # [win]
+    - m2-perl  # [win]
+    - make  # [unix]
+    - ninja
     - python
   host:
     - liblapack
