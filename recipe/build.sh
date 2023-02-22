@@ -22,8 +22,6 @@ mkdir build
 cd build
 rm -rf *
 
-# Upstream doesn't properly pass host compiler args to NVCC, so we have to pass
-# them here with CUDA_NVCC_FLAGS.
 cmake $SRC_DIR \
   -G "Unix Makefiles" \
   -DBUILD_SHARED_LIBS:BOOL=ON \
@@ -32,7 +30,6 @@ cmake $SRC_DIR \
   -DGPU_TARGET=$CUDA_ARCH_LIST \
   -DMAGMA_ENABLE_CUDA:BOOL=ON \
   -DUSE_FORTRAN:BOOL=OFF \
-  -DCUDA_NVCC_FLAGS="" \
   ${CMAKE_ARGS}
 
 # Explicitly name build targets to avoid building tests
