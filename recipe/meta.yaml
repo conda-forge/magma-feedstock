@@ -9,7 +9,6 @@ source:
   sha256: 22351e6edebd1d10c120bf2fa2216dbe8673c6c8417ae4db4f145b9c17b95cba
   patches:
     - patches/0001-Add-all-target.patch
-    - patches/0002-Disable-certain-compiler-features-on-Windows.patch
 
 build:
   number: 0
