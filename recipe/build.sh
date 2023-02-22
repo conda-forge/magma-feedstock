@@ -23,7 +23,7 @@ cd build
 rm -rf *
 
 cmake $SRC_DIR \
-  -G "Unix Makefiles" \
+  -G "Ninja" \
   -DBUILD_SHARED_LIBS:BOOL=ON \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=$PREFIX \
@@ -35,7 +35,7 @@ cmake $SRC_DIR \
 # Explicitly name build targets to avoid building tests
 cmake --build . \
     --parallel ${CPU_COUNT} \
-    --target lib sparse-lib \
+    --target magma magma_sparse \
     --verbose
 
 cmake --install .
