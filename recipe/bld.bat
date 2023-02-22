@@ -1,12 +1,16 @@
 @echo on
 
-set "CUDA_ARCH_LIST=-gencode arch=compute_35,code=sm_35 -gencode arch=compute_50,code=sm_50 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_61,code=sm_61 -gencode arch=compute_70,code=sm_70 -gencode arch=compute_75,code=sm_75"
+:: Duplicate lists because of https://bitbucket.org/icl/magma/pull-requests/32
+set "CUDA_ARCH_LIST=sm_35,sm_50,sm_60,sm_61,sm_70,sm_75"
+set "CUDAARCHS=35;50;60;61;70;75"
 
 if %cuda_compiler_version% GEQ 11.0 (
-    set "CUDA_ARCH_LIST=%CUDA_ARCH_LIST% -gencode arch=compute_80,code=sm_80"
+    set "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_80"
+    set "CUDAARCHS=%CUDAARCHS%;80"
 )
 if %cuda_compiler_version% GEQ 11.1 (
-    set "CUDA_ARCH_LIST=%CUDA_ARCH_LIST% -gencode arch=compute_86,code=sm_86"
+    set "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_86"
+    set "CUDAARCHS=%CUDAARCHS%;86"
 )
 
 set CFLAGS=
@@ -28,8 +32,7 @@ cmake %SRC_DIR% ^
   -DCMAKE_BUILD_TYPE=Release ^
   -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
   -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
-  -DCUDA_ARCH_LIST="%CUDA_ARCH_LIST%" ^
-  -DGPU_TARGET="all" ^
+  -DGPU_TARGET="%CUDA_ARCH_LIST%" ^
   -DMAGMA_ENABLE_CUDA:BOOL=ON ^
   -DUSE_FORTRAN:BOOL=OFF ^
   -DCUDA_NVCC_FLAGS="--use-local-env"

@@ -7,8 +7,6 @@ package:
 source:
   url: http://icl.utk.edu/projectsfiles/magma/downloads/magma-{{ version }}.tar.gz
   sha256: 22351e6edebd1d10c120bf2fa2216dbe8673c6c8417ae4db4f145b9c17b95cba
-  patches:
-    - patches/0001-Add-all-target.patch
 
 build:
   number: 0
@@ -21,7 +19,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}
-    - cmake
+    - cmake >=3.20
     - make  # [unix]
     - ninja  # [win]
     - libgomp  # [linux]
