@@ -19,7 +19,6 @@ if %cuda_compiler_version% GEQ 11.1 (
 
 set CFLAGS=
 set CXXFLAGS=
-set CPPFLAGS=
 
 md build
 cd build

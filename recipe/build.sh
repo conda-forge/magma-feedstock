@@ -18,7 +18,6 @@ fi
 
 # Remove CXX standard flags added by conda-forge. std=c++11 is required to
 # compile some .cu files
-CPPFLAGS="${CPPFLAGS//-std=c++17/-std=c++11}"
 CXXFLAGS="${CXXFLAGS//-std=c++17/-std=c++11}"
 
 mkdir build
