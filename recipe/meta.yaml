@@ -12,6 +12,7 @@ source:
 build:
   number: 0
   skip: true  # [cuda_compiler_version=="None"]
+  skip: true  # [cuda_compiler_version=="10.2"]
   run_exports:
     - {{ pin_subpackage('magma', max_pin='x.x.x') }}
 
