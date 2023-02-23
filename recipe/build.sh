@@ -18,8 +18,8 @@ fi
 
 # Only build recent archs for Power and Arm to reduce build time
 if [[ "$target_platform" == "linux-ppc64le" || "$target_platform" == "linux-aarch64" ]]; then
-  export CUDA_ARCH_LIST="sm_70,sm_75,sm_80,sm_86"
-  export CUDAARCHS="70;75;80;86"
+  export CUDA_ARCH_LIST="sm_70,sm_80"
+  export CUDAARCHS="70-virtual;80-virtual"
 fi
 
 # Remove CXX standard flags added by conda-forge. std=c++11 is required to
