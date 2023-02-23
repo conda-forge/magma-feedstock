@@ -32,6 +32,7 @@ cmake $SRC_DIR \
   -DGPU_TARGET=$CUDA_ARCH_LIST \
   -DMAGMA_ENABLE_CUDA:BOOL=ON \
   -DUSE_FORTRAN:BOOL=OFF \
+  -DCMAKE_CUDA_SEPARABLE_COMPILATION:BOOL=ON \
   ${CMAKE_ARGS}
 
 # Explicitly name build targets to avoid building tests
