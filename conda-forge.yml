@@ -8,3 +8,8 @@ github:
 provider:
   linux_ppc64le: azure
   linux_aarch64: azure
+azure:
+  # Enable artifact storage to test with GPUs locally
+  store_build_artifacts: true
+conda_build:
+  pkg_format: "2"
