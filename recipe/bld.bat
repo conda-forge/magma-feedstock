@@ -45,7 +45,7 @@ if errorlevel 1 exit /b 1
 cmake --build . ^
     --config Release ^
     --parallel %CPU_COUNT% ^
-    --target magma magma_sparse ^
+    --target magma ^
     --verbose
 if errorlevel 1 exit /b 1
 

@@ -1,7 +1,7 @@
 {% set version = "2.7.1" %}
 
 package:
-  name: magma
+  name: libmagma
   version: {{ version }}
 
 source:
@@ -16,7 +16,7 @@ build:
   skip: true  # [cuda_compiler_version == "11.0"]
   skip: true  # [cuda_compiler_version == "11.1"]
   run_exports:
-    - {{ pin_subpackage('magma', max_pin='x.x.x') }}
+    - {{ pin_subpackage('libmagma', max_pin='x.x.x') }}
 
 requirements:
   build:
@@ -40,7 +40,7 @@ test:
   commands:
     - test -f $PREFIX/include/magma.h                   # [unix]
     - test -f $PREFIX/lib/libmagma${SHLIB_EXT}          # [unix]
-    - test -f $PREFIX/lib/libmagma_sparse${SHLIB_EXT}   # [unix]
+    - test ! -f $PREFIX/lib/libmagma_sparse${SHLIB_EXT}   # [unix]
     - test -f $PREFIX/lib/pkgconfig/magma.pc            # [unix]
     - if not exist %LIBRARY_PREFIX%\include\magma.h exit 1       # [win]
     - if not exist %LIBRARY_PREFIX%\lib\magma.lib exit 1         # [win]
@@ -139,7 +139,7 @@ test:
 {% endfor %}
 
 {% for each_header in magmasparse_headers %}
-    - test -f $PREFIX/include/magmasparse_{{ each_header }}.h                       # [unix]
+    - test ! -f $PREFIX/include/magmasparse_{{ each_header }}.h                       # [unix]
     - if not exist %LIBRARY_PREFIX%\include\magmasparse_{{ each_header }}.h exit 1  # [win]
 {% endfor %}
 
