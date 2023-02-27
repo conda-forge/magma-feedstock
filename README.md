@@ -1,11 +1,11 @@
-About magma
-===========
+About libmagma-feedstock
+========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/magma-feedstock/blob/main/LICENSE.txt)
 
 Home: http://icl.cs.utk.edu/magma/software/index.html
 
 Package license: BSD-3-Clause
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/magma-feedstock/blob/main/LICENSE.txt)
 
 Summary: Matrix Algebra on GPU and Multicore Architectures
 
@@ -53,53 +53,53 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-magma-green.svg)](https://anaconda.org/conda-forge/magma) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/magma.svg)](https://anaconda.org/conda-forge/magma) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/magma.svg)](https://anaconda.org/conda-forge/magma) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/magma.svg)](https://anaconda.org/conda-forge/magma) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libmagma-green.svg)](https://anaconda.org/conda-forge/libmagma) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libmagma.svg)](https://anaconda.org/conda-forge/libmagma) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libmagma.svg)](https://anaconda.org/conda-forge/libmagma) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libmagma.svg)](https://anaconda.org/conda-forge/libmagma) |
 
-Installing magma
-================
+Installing libmagma
+===================
 
-Installing `magma` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `libmagma` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `magma` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `libmagma` can be installed with `conda`:
 
 ```
-conda install magma
-```
-
-or with `mamba`:
-
-```
-mamba install magma
-```
-
-It is possible to list all of the versions of `magma` available on your platform with `conda`:
-
-```
-conda search magma --channel conda-forge
+conda install libmagma
 ```
 
 or with `mamba`:
 
 ```
-mamba search magma --channel conda-forge
+mamba install libmagma
+```
+
+It is possible to list all of the versions of `libmagma` available on your platform with `conda`:
+
+```
+conda search libmagma --channel conda-forge
+```
+
+or with `mamba`:
+
+```
+mamba search libmagma --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search magma --channel conda-forge
+mamba repoquery search libmagma --channel conda-forge
 
-# List packages depending on `magma`:
-mamba repoquery whoneeds magma --channel conda-forge
+# List packages depending on `libmagma`:
+mamba repoquery whoneeds libmagma --channel conda-forge
 
-# List dependencies of `magma`:
-mamba repoquery depends magma --channel conda-forge
+# List dependencies of `libmagma`:
+mamba repoquery depends libmagma --channel conda-forge
 ```
 
 
@@ -144,17 +144,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating magma-feedstock
-========================
+Updating libmagma-feedstock
+===========================
 
-If you would like to improve the magma recipe or build a new
+If you would like to improve the libmagma recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/magma-feedstock are
+Note that all branches in the conda-forge/libmagma-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks and branches in the main repository should only be used to
 build distinct package versions.
