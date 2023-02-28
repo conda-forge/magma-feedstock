@@ -5,17 +5,8 @@ make generate --jobs %CPU_COUNT%
 if errorlevel 1 exit /b 1
 
 :: Duplicate lists because of https://bitbucket.org/icl/magma/pull-requests/32
-set "CUDA_ARCH_LIST=sm_35,sm_50,sm_60,sm_61,sm_70,sm_75"
-set "CUDAARCHS=35;50;60;61;70;75"
-
-if %cuda_compiler_version% GEQ 11.0 (
-    set "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_80"
-    set "CUDAARCHS=%CUDAARCHS%;80"
-)
-if %cuda_compiler_version% GEQ 11.1 (
-    set "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_86"
-    set "CUDAARCHS=%CUDAARCHS%;86"
-)
+set "CUDA_ARCH_LIST=sm_35,sm_50,sm_61,sm_75,sm_80,sm_86"
+set "CUDAARCHS=35;50;61;75;80;86"
 
 set CFLAGS=
 set CXXFLAGS=
@@ -39,7 +30,7 @@ cmake %SRC_DIR% ^
   -DMAGMA_ENABLE_CUDA:BOOL=ON ^
   -DUSE_FORTRAN:BOOL=OFF ^
   -DCMAKE_CUDA_FLAGS="--use-local-env" ^
-  -DCMAKE_CUDA_SEPARABLE_COMPILATION:BOOL=OFF
+  -DCMAKE_CUDA_SEPARABLE_COMPILATION:BOOL=ON
 if errorlevel 1 exit /b 1
 
 cmake --build . ^
