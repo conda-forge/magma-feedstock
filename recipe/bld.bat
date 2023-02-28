@@ -5,8 +5,8 @@ make generate --jobs %CPU_COUNT%
 if errorlevel 1 exit /b 1
 
 :: Duplicate lists because of https://bitbucket.org/icl/magma/pull-requests/32
-set "CUDA_ARCH_LIST=sm_35,sm_50,sm_61,sm_75,sm_80,sm_86"
-set "CUDAARCHS=35;50;61;75;80;86"
+set "CUDA_ARCH_LIST=sm_35,sm_50,sm_61,sm_70,sm_75,sm_80,sm_86"
+set "CUDAARCHS=35;50;61;70;75;80;86"
 
 set CFLAGS=
 set CXXFLAGS=
