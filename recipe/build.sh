@@ -41,7 +41,7 @@ cmake $SRC_DIR \
 # Explicitly name build targets to avoid building tests
 cmake --build . \
     --parallel ${CPU_COUNT} \
-    --target magma magma_sparse \
+    --target magma \
     --verbose
 
 cmake --install .
