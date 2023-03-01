@@ -23,6 +23,7 @@ cmake $SRC_DIR \
   -DMAGMA_ENABLE_CUDA:BOOL=ON \
   -DUSE_FORTRAN:BOOL=OFF \
   -DCMAKE_CUDA_SEPARABLE_COMPILATION:BOOL=ON \
+  -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
   ${CMAKE_ARGS}
 
 # Explicitly name build targets to avoid building tests
@@ -32,3 +33,6 @@ cmake --build . \
     --verbose
 
 cmake --install .
+
+rm -rf $PREFIX/include/*
+rm $PREFIX/lib/pkgconfig/magma.pc

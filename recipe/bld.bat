@@ -42,3 +42,6 @@ if errorlevel 1 exit /b 1
 
 cmake --install .
 if errorlevel 1 exit /b 1
+
+rm -rf %LIBRARY_PREFIX%\include\*
+rm %LIBRARY_PREFIX%\lib\pkgconfig\magma.pc
