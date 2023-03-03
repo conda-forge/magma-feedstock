@@ -16,7 +16,7 @@ export CUDAARCHS="35-virtual;60-virtual;61-real;70-virtual;75-real;80-virtual;86
 # Only build the lowest non-deprecated arch to minimize build time
 if [[ "$target_platform" == "linux-ppc64le" || "$target_platform" == "linux-aarch64" ]]; then
   export CUDA_ARCH_LIST="sm_60"
-  export CUDAARCHS="60"
+  export CUDAARCHS="60-virtual"
 fi
 
 # Remove CXX standard flags added by conda-forge. std=c++11 is required to
