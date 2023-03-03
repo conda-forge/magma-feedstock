@@ -6,7 +6,7 @@ if errorlevel 1 exit /b 1
 
 :: Duplicate lists because of https://bitbucket.org/icl/magma/pull-requests/32
 set "CUDA_ARCH_LIST=sm_35,sm_60,sm_70,sm_80"
-set "CUDAARCHS=35-virtual,60-virtual,70-virtual,80-virtual"
+set "CUDAARCHS=35-virtual;60-virtual;70-virtual;80-virtual"
 
 set CFLAGS=
 set CXXFLAGS=
