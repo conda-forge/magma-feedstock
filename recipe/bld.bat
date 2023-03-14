@@ -45,3 +45,4 @@ if errorlevel 1 exit /b 1
 
 del /q %LIBRARY_PREFIX%\include\*
 del %LIBRARY_PREFIX%\lib\pkgconfig\magma.pc
+if errorlevel 1 exit /b 1
