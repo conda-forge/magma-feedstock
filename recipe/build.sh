@@ -29,7 +29,7 @@ cmake $SRC_DIR \
 cmake --build . \
     --config Release \
     --parallel ${CPU_COUNT} \
-    --target magma \
+    --target magma_sparse \
     --verbose
 
 cmake --install .
