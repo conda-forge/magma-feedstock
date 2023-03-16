@@ -8,9 +8,6 @@ if errorlevel 1 exit /b 1
 set "CUDA_ARCH_LIST=sm_35,sm_60,sm_70,sm_80"
 set "CUDAARCHS=35-virtual;60-virtual;70-virtual;80-virtual"
 
-set CFLAGS=
-set CXXFLAGS=
-
 md build
 cd build
 if errorlevel 1 exit /b 1
@@ -36,7 +33,7 @@ if errorlevel 1 exit /b 1
 cmake --build . ^
     --config Release ^
     --parallel %CPU_COUNT% ^
-    --target magma ^
+    --target magma_sparse ^
     --verbose
 if errorlevel 1 exit /b 1
 
