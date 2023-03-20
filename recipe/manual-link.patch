@@ -9,7 +9,7 @@ index 21f6a5be..0f69f2d2 100644
 -    magma
 +    $<$<PLATFORM_ID:Linux>:-lmagma>
 +    $<$<PLATFORM_ID:Darwin>:-lmagma>
-+    $<$<PLATFORM_ID:Windows>:-lmagma>
++    $<$<PLATFORM_ID:Windows>:$ENV{LIBRARY_PREFIX}/lib/magma.lib>
      ${blas_fix}
      ${LAPACK_LIBRARIES}
      CUDA::cudart
