@@ -93,7 +93,10 @@ source:
     sha256: f9cd24024e3e14faf4d38cbd8aef56a62119baa514fd383447c3b64f415bfc92
   - path: make.inc
   - patches:
+  # Prevent CMake from complaining about unbuilt targets
       - optional-install.patch
+  # Prevent CMake from auto-building libmagma in this feedstock
+      - manual-link.patch
 
 build:
   number: 0

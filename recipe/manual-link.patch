@@ -1,0 +1,15 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 21f6a5be..0f69f2d2 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -708,7 +708,9 @@ if (MAGMA_ENABLE_CUDA)
+   add_library( magma_sparse ${libsparse_all} )
+   set_property(TARGET magma_sparse PROPERTY CUDA_STANDARD 11)
+   target_link_libraries( magma_sparse
+-    magma
++    $<$<PLATFORM_ID:Linux>:-lmagma>
++    $<$<PLATFORM_ID:Darwin>:-lmagma>
++    $<$<PLATFORM_ID:Windows>:-lmagma>
+     ${blas_fix}
+     ${LAPACK_LIBRARIES}
+     CUDA::cudart
