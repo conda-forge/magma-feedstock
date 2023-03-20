@@ -163,9 +163,6 @@ outputs:
         - {{ pin_compatible('libmagma', max_pin='x.x.x') }}
         - {{ pin_subpackage('libmagma_sparse', max_pin='x.x.x') }}
     requirements:
-      build:
-        - cmake >=3.20
-        - ninja
       host:
         - libmagma {{ version }}
         - libmagma_sparse {{ version }}

@@ -18,7 +18,6 @@ cmake $SRC_DIR \
   -G "Ninja" \
   -DBUILD_SHARED_LIBS:BOOL=ON \
   -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX=$PREFIX \
   -DGPU_TARGET=$CUDA_ARCH_LIST \
   -DMAGMA_ENABLE_CUDA:BOOL=ON \
   -DUSE_FORTRAN:BOOL=OFF \
@@ -32,7 +31,4 @@ cmake --build . \
     --target magma_sparse \
     --verbose
 
-cmake --install .
-
-rm -rf $PREFIX/include/*
-rm $PREFIX/lib/pkgconfig/magma.pc
+install ./lib/libmagma_sparse.so $PREFIX/lib/libmagma_sparse.so
