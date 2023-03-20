@@ -21,8 +21,6 @@ cmake %SRC_DIR% ^
   -G "Ninja" ^
   -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS:BOOL=ON ^
   -DCMAKE_BUILD_TYPE=Release ^
-  -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
-  -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
   -DGPU_TARGET="%CUDA_ARCH_LIST%" ^
   -DMAGMA_ENABLE_CUDA:BOOL=ON ^
   -DUSE_FORTRAN:BOOL=OFF ^
@@ -37,9 +35,6 @@ cmake --build . ^
     --verbose
 if errorlevel 1 exit /b 1
 
-cmake --install .
-if errorlevel 1 exit /b 1
-
-del /q %LIBRARY_PREFIX%\include\*
-del %LIBRARY_PREFIX%\lib\pkgconfig\magma.pc
+cp .\lib\magma_sparse.lib %LIBRARY_PREFIX%\lib\magma_sparse.lib
+cp .\lib\magma_sparse.dll %LIBRARY_PREFIX%\bin\magma_sparse.dll
 if errorlevel 1 exit /b 1
