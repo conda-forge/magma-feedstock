@@ -36,5 +36,5 @@ cmake --build . ^
 if errorlevel 1 exit /b 1
 
 cp .\lib\magma_sparse.lib %LIBRARY_PREFIX%\lib\magma_sparse.lib
-cp .\lib\magma_sparse.dll %LIBRARY_PREFIX%\bin\magma_sparse.dll
+cp .\magma_sparse.dll %LIBRARY_PREFIX%\bin\magma_sparse.dll
 if errorlevel 1 exit /b 1
