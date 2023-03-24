@@ -2,11 +2,14 @@ conda_forge_output_validation: true
 github:
   branch_name: main
   tooling_branch_name: main
-# PowerPC and ARM not enabled because emulated builds on Azure timeout at 6
-# hours with only 4 percent completed. Native Travis build also became
-# unresponsive and timeout. 2022/10/20 @carterbox
 azure:
   # Enable artifact storage to test with GPUs locally
   store_build_artifacts: true
 conda_build:
   pkg_format: '2'
+provider:
+  linux_aarch64: default
+  linux_ppc64le: default
+azure:
+  # Enable artifact storage to test with GPUs locally
+  store_build_artifacts: true

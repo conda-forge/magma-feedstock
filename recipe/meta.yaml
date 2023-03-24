@@ -99,11 +99,13 @@ source:
       - manual-link.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [cuda_compiler_version == "None"]
   skip: true  # [cuda_compiler_version == "10.2"]
   skip: true  # [cuda_compiler_version == "11.0"]
   skip: true  # [cuda_compiler_version == "11.1"]
+  # PowerPC builds take too long
+  skip: true  # [ppc64le]
   run_exports:
     - {{ pin_subpackage('libmagma_sparse', max_pin='x.x.x') }}
 
