@@ -128,6 +128,7 @@ requirements:
   host:
 {% if cuda_major == 12 %}
     - cuda-cudart-dev
+    - cuda-profiler-api
     - libcublas-dev
     - libcusparse-dev
 {% endif %}
