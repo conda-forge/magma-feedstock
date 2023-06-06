@@ -1,15 +1,16 @@
+conda_build:
+  error_overlinking: true
+  pkg_format: '2'
 conda_forge_output_validation: true
 github:
   branch_name: main
   tooling_branch_name: main
-azure:
-  # Enable artifact storage to test with GPUs locally
-  store_build_artifacts: true
-conda_build:
-  pkg_format: '2'
 provider:
   linux_aarch64: default
   linux_ppc64le: default
 azure:
   # Enable artifact storage to test with GPUs locally
   store_build_artifacts: true
+build_platform:
+  linux_ppc64le: linux_64
+  linux_aarch64: linux_64

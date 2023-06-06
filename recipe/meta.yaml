@@ -84,6 +84,8 @@
   'z_v1_map'
 ] %}
 
+{% set cuda_major = environ.get("cuda_compiler_version", "11.2").split(".")[0]|int %}
+
 package:
   name: libmagma_sparse
   version: {{ version }}
@@ -99,7 +101,7 @@ source:
       - manual-link.patch
 
 build:
-  number: 2
+  number: 3
   skip: true  # [cuda_compiler_version == "None"]
   skip: true  # [cuda_compiler_version == "10.2"]
   skip: true  # [cuda_compiler_version == "11.0"]
@@ -124,6 +126,12 @@ requirements:
     - ninja
     - python
   host:
+{% if cuda_major == 12 %}
+    - cuda-cudart-dev
+    - cuda-profiler-api
+    - libcublas-dev
+    - libcusparse-dev
+{% endif %}
     - liblapack
     - libblas
     - libmagma {{ version }}
