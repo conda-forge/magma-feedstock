@@ -101,7 +101,7 @@ source:
       - manual-link.patch
 
 build:
-  number: 3
+  number: 4
   skip: true  # [cuda_compiler_version == "None"]
   skip: true  # [cuda_compiler_version == "10.2"]
   skip: true  # [cuda_compiler_version == "11.0"]
@@ -134,9 +134,9 @@ requirements:
 {% endif %}
     - liblapack
     - libblas
-    - libmagma {{ version }}
+    - libmagma {{ version }}.*
   run:
-    - libmagma {{ version }}
+    - libmagma {{ version }}.*
 
 test:
   commands:
@@ -174,11 +174,11 @@ outputs:
         - {{ pin_subpackage('libmagma_sparse', max_pin='x.x.x') }}
     requirements:
       host:
-        - libmagma {{ version }}
-        - libmagma_sparse {{ version }}
+        - libmagma {{ version }}.*
+        - libmagma_sparse {{ version }}.*
       run:
-        - libmagma {{ version }}
-        - libmagma_sparse {{ version }}
+        - libmagma {{ version }}.*
+        - libmagma_sparse {{ version }}.*
     test:
       commands:
         - test -f $PREFIX/include/magma.h                        # [unix]
