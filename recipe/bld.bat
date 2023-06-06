@@ -5,8 +5,28 @@ make generate --jobs %CPU_COUNT%
 if errorlevel 1 exit /b 1
 
 :: Duplicate lists because of https://bitbucket.org/icl/magma/pull-requests/32
-set "CUDA_ARCH_LIST=sm_35,sm_50,sm_60,sm_70,sm_75,sm_80"
-set "CUDAARCHS=35-virtual;50-virtual;60-virtual;70-virtual;75-virtual;80-virtual"
+SET "CUDA_ARCH_LIST=sm_50,sm_60,sm_61,sm_70,sm_75,sm_80"
+SET "CUDAARCHS=50-real;52-real;60-real;61-real;70-real;75-real;80-real"
+
+IF "%cuda_compiler_version%" == "11.0" (
+  SET "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_35"
+  SET "CUDAARCHS=%CUDAARCHS%;35-real;80-virtual"
+)
+
+IF "%cuda_compiler_version%" == "11.1" (
+  SET "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_35,sm_86"
+  SET "CUDAARCHS=%CUDAARCHS%;35-real;86"
+)
+
+IF "%cuda_compiler_version%" == "11.2" (
+  SET "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_35,sm_86"
+  SET "CUDAARCHS=%CUDAARCHS%;35-real;86"
+)
+
+IF "%cuda_compiler_version%" == "12.0" (
+  SET "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_86,sm_89,sm_90"
+  SET "CUDAARCHS=%CUDAARCHS%;86-real;89-real;90"
+)
 
 md build
 cd build
