@@ -7,7 +7,7 @@ make generate --jobs ${CPU_COUNT}
 CUDA_ARCH_LIST="sm_50,sm_60,sm_61,sm_70,sm_75,sm_80"
 CUDAARCHS="50-real;52-real;60-real;61-real;70-real;75-real;80-real"
 
-if [[ "$cuda_compiler_version" == "11.*" ]]; then
+if [[ "$cuda_compiler_version" == "11."* ]]; then
   CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_35"
   CUDAARCHS="${CUDAARCHS};35-real"
 fi
@@ -21,7 +21,7 @@ if [[ "$cuda_compiler_version" == "11.1" || "$cuda_compiler_version" == "11.2" ]
   CUDAARCHS="${CUDAARCHS};86"
 fi
 
-if [[ "$cuda_compiler_version" == "12.*" ]]; then
+if [[ "$cuda_compiler_version" == "12."* ]]; then
   CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_86,sm_89,sm_90"
   CUDAARCHS="${CUDAARCHS};86-real;89-real;90"
 fi
@@ -32,7 +32,7 @@ if [[ "$target_platform" == "linux-aarch64" ]]; then
   CUDAARCHS="${CUDAARCHS};53-real;62-real;72-real"
 fi
 
-if [[ "$target_platform" == "linux-aarch64" && "$cuda_compiler_version" == "12.*" ]]; then
+if [[ "$target_platform" == "linux-aarch64" && "$cuda_compiler_version" == "12."* ]]; then
   CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_87"
   CUDAARCHS="${CUDAARCHS};87-real"
 fi
