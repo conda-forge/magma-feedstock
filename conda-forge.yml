@@ -1,5 +1,6 @@
 azure:
   free_disk_space: true
+  # Enable artifact storage to test with GPUs locally
   store_build_artifacts: true
 bot:
   automerge: true
