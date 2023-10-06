@@ -1,44 +1,52 @@
 set -exv
 
 # This step is required when building from raw source archive
-make generate --jobs ${CPU_COUNT}
+# make generate --jobs ${CPU_COUNT}
+
+# Unlike libmagma-feedstock, this feedstock has plenty of time
+
+# 11.2 supports archs 3.5 - 8.6
+# 11.8 supports archs 3.5 - 9.0
+# 12.x supports archs 5.0 - 9.0
 
 # Duplicate lists because of https://bitbucket.org/icl/magma/pull-requests/32
-CUDA_ARCH_LIST="sm_50,sm_60,sm_61,sm_70,sm_75,sm_80"
-CUDAARCHS="50-real;52-real;60-real;61-real;70-real;75-real;80-real"
+export CUDA_ARCH_LIST="sm_50,sm_52,sm_60,sm_61,sm_70,sm_75,sm_80"
+export CUDAARCHS="50-real;52-real;60-real;61-real;70-real;75-real;80-real"
 
-if [[ "$cuda_compiler_version" == "11."* ]]; then
-  CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_35"
-  CUDAARCHS="${CUDAARCHS};35-real"
+if [[ "$cuda_compiler_version" == "11.2" ]]; then
+  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_35"
+  export CUDAARCHS="${CUDAARCHS};35-real;86"
 fi
 
-if [[ "$cuda_compiler_version" == "11.0" ]]; then
-  CUDAARCHS="${CUDAARCHS};80-virtual"
+if [[ "$cuda_compiler_version" == "11.8" ]]; then
+  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_35,sm_86,sm_89,sm_90"
+  export CUDAARCHS="${CUDAARCHS};35-real;86-real;89-real;90"
 fi
 
-if [[ "$cuda_compiler_version" == "11.1" || "$cuda_compiler_version" == "11.2" ]]; then
-  CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_86"
-  CUDAARCHS="${CUDAARCHS};86"
+if [[ "$cuda_compiler_version" == "12.0" ]]; then
+  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_86,sm_89,sm_90"
+  export CUDAARCHS="${CUDAARCHS};86-real;89-real;90"
 fi
 
-if [[ "$cuda_compiler_version" == "12."* ]]; then
-  CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_86,sm_89,sm_90"
-  CUDAARCHS="${CUDAARCHS};86-real;89-real;90"
+if [[ "$target_platform" == "linux-ppc64le" ]]; then
+  if [[ "$cuda_compiler_version" == "11"* ]]; then
+    export CMAKE_ARGS="${CMAKE_ARGS} -DCUDAToolkit_ROOT=/usr/local/cuda/targets/ppc64le-linux"
+  fi
 fi
 
 # Jetsons are ARM devices, so target those minor versions too
 if [[ "$target_platform" == "linux-aarch64" ]]; then
-  CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_72,sm_62,sm_53"
-  CUDAARCHS="${CUDAARCHS};53-real;62-real;72-real"
+  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_72,sm_62,sm_53"
+  export CUDAARCHS="${CUDAARCHS};53-real;62-real;72-real"
+  if [[ "$cuda_compiler_version" == "11"* ]]; then
+    export CMAKE_ARGS="${CMAKE_ARGS} -DCUDAToolkit_ROOT=/usr/local/cuda/targets/sbsa-linux"
+  fi
+  if [[ "$cuda_compiler_version" == "12."* ]]; then
+  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_87"
+  export CUDAARCHS="${CUDAARCHS};87-real"
+  fi
 fi
 
-if [[ "$target_platform" == "linux-aarch64" && "$cuda_compiler_version" == "12."* ]]; then
-  CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_87"
-  CUDAARCHS="${CUDAARCHS};87-real"
-fi
-
-export CUDA_ARCH_LIST
-export CUDAARCHS
 
 # Remove CXX standard flags added by conda-forge. std=c++11 is required to
 # compile some .cu files
