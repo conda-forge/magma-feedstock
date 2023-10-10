@@ -28,19 +28,10 @@ if [[ "$cuda_compiler_version" == "12.0" ]]; then
   export CUDAARCHS="${CUDAARCHS};86-real;89-real;90"
 fi
 
-if [[ "$target_platform" == "linux-ppc64le" ]]; then
-  if [[ "$cuda_compiler_version" == "11"* ]]; then
-    export CMAKE_ARGS="${CMAKE_ARGS} -DCUDAToolkit_ROOT=/usr/local/cuda/targets/ppc64le-linux"
-  fi
-fi
-
 # Jetsons are ARM devices, so target those minor versions too
 if [[ "$target_platform" == "linux-aarch64" ]]; then
   export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_72,sm_62,sm_53"
   export CUDAARCHS="${CUDAARCHS};53-real;62-real;72-real"
-  if [[ "$cuda_compiler_version" == "11"* ]]; then
-    export CMAKE_ARGS="${CMAKE_ARGS} -DCUDAToolkit_ROOT=/usr/local/cuda/targets/sbsa-linux"
-  fi
   if [[ "$cuda_compiler_version" == "12."* ]]; then
   export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_87"
   export CUDAARCHS="${CUDAARCHS};87-real"
