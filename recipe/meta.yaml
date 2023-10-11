@@ -1,5 +1,3 @@
-{% set version = "2.7.1" %}
-
 # find  magma_* | sed "s/magma_/'/" | sed "s/\.h/',/"
 {% set magma_headers = [
   'auxiliary',
@@ -86,13 +84,15 @@
 
 {% set cuda_major = environ.get("cuda_compiler_version", "11.2").split(".")[0]|int %}
 
+{% set version = "2.7.1" %}
+
 package:
   name: libmagma_sparse
   version: {{ version }}
 
 source:
-  - url: https://bitbucket.org/icl/magma/get/v{{ version }}.tar.bz2
-    sha256: f9cd24024e3e14faf4d38cbd8aef56a62119baa514fd383447c3b64f415bfc92
+  - url: https://icl.utk.edu/projectsfiles/magma/downloads/magma-{{ version }}.tar.gz
+    sha256: d9c8711c047a38cae16efde74bee2eb3333217fd2711e1e9b8606cbbb4ae1a50
   - path: make.inc
   - patches:
   # Prevent CMake from complaining about unbuilt targets
@@ -101,13 +101,11 @@ source:
       - manual-link.patch
 
 build:
-  number: 4
+  number: 5
   skip: true  # [cuda_compiler_version == "None"]
   skip: true  # [cuda_compiler_version == "10.2"]
   skip: true  # [cuda_compiler_version == "11.0"]
   skip: true  # [cuda_compiler_version == "11.1"]
-  # PowerPC builds take too long
-  skip: true  # [ppc64le]
   run_exports:
     - {{ pin_subpackage('libmagma_sparse', max_pin='x.x.x') }}
 
