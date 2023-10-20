@@ -84,15 +84,15 @@
 
 {% set cuda_major = environ.get("cuda_compiler_version", "11.2").split(".")[0]|int %}
 
-{% set version = "2.7.1" %}
+{% set version = "2.7.2" %}
 
 package:
-  name: libmagma_sparse
+  name: libmagma-split
   version: {{ version }}
 
 source:
   - url: https://icl.utk.edu/projectsfiles/magma/downloads/magma-{{ version }}.tar.gz
-    sha256: d9c8711c047a38cae16efde74bee2eb3333217fd2711e1e9b8606cbbb4ae1a50
+    sha256: 729bc1a70e518a7422fe7a3a54537a4741035a77be3349f66eac5c362576d560
   - path: make.inc
   - patches:
   # Prevent CMake from complaining about unbuilt targets
@@ -101,13 +101,11 @@ source:
       - manual-link.patch
 
 build:
-  number: 6
+  number: 0
   skip: true  # [cuda_compiler_version == "None"]
   skip: true  # [cuda_compiler_version == "10.2"]
   skip: true  # [cuda_compiler_version == "11.0"]
   skip: true  # [cuda_compiler_version == "11.1"]
-  run_exports:
-    - {{ pin_subpackage('libmagma_sparse', max_pin='x.x.x') }}
 
 requirements:
   build:
@@ -133,50 +131,81 @@ requirements:
     - liblapack
     - libblas
     - libmagma {{ version }}.*
-  run:
-    - libmagma {{ version }}.*
-
-test:
-  commands:
-    - test ! -f $PREFIX/include/magma.h                        # [unix]
-    - if exist %LIBRARY_PREFIX%\include\magma.h exit 1         # [win]
-    - test -f $PREFIX/lib/libmagma${SHLIB_EXT}                 # [unix]
-    - if not exist %LIBRARY_PREFIX%\lib\magma.lib exit 1       # [win]
-    - if not exist %LIBRARY_PREFIX%\bin\magma.dll exit 1       # [win]
-    - test -f $PREFIX/lib/libmagma_sparse${SHLIB_EXT}        # [unix]
-    - if not exist %LIBRARY_PREFIX%\lib\magma_sparse.lib exit 1    # [win]
-    - if not exist %LIBRARY_PREFIX%\bin\magma_sparse.dll exit 1    # [win]
-    - test ! -f $PREFIX/lib/pkgconfig/magma.pc                 # [unix]
-    - if exist %LIBRARY_PREFIX%\lib\pkgconfig\magma.pc exit 1  # [win]
-{% for each_header in magma_headers %}
-    - test ! -f $PREFIX/include/magma_{{ each_header }}.h                 # [unix]
-    - if exist %LIBRARY_PREFIX%\include\magma_{{ each_header }}.h exit 1  # [win]
-{% endfor %}
-{% for each_header in magmasparse_headers %}
-    - test ! -f $PREFIX/include/magmasparse_{{ each_header }}.h                 # [unix]
-    - if exist %LIBRARY_PREFIX%\include\magmasparse_{{ each_header }}.h exit 1  # [win]
-{% endfor %}
-{% for each_header in magmablas_headers %}
-    - test ! -f $PREFIX/include/magmablas_{{ each_header }}.h                 # [unix]
-    - if exist %LIBRARY_PREFIX%\include\magmablas_{{ each_header }}.h exit 1  # [win]
-{% endfor %}
 
 outputs:
   - name: libmagma_sparse
-  - name: magma
-    script: install_headers.sh  # [unix]
-    script: install_headers.bat  # [win]
     build:
       run_exports:
         - {{ pin_compatible('libmagma', max_pin='x.x.x') }}
         - {{ pin_subpackage('libmagma_sparse', max_pin='x.x.x') }}
     requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - {{ compiler('cuda') }}
+        - libgomp  # [linux]
+        - llvm-openmp  # [osx]
       host:
+    {% if cuda_major == 12 %}
+        - cuda-cudart-dev
+        - cuda-profiler-api
+        - libcublas-dev
+        - libcusparse-dev
+    {% endif %}
+        - liblapack
+        - libblas
         - libmagma {{ version }}.*
-        - libmagma_sparse {{ version }}.*
       run:
         - libmagma {{ version }}.*
-        - libmagma_sparse {{ version }}.*
+    files:
+      - lib/libmagma_sparse*  # [unix]
+      - Library\lib\magma_sparse.lib  # [win]
+      - Library\bin\magma_sparse.dll  # [win]
+    test:
+      commands:
+        - test ! -f $PREFIX/include/magma.h                        # [unix]
+        - if exist %LIBRARY_PREFIX%\include\magma.h exit 1         # [win]
+        - test -f $PREFIX/lib/libmagma${SHLIB_EXT}                 # [unix]
+        - if not exist %LIBRARY_PREFIX%\lib\magma.lib exit 1       # [win]
+        - if not exist %LIBRARY_PREFIX%\bin\magma.dll exit 1       # [win]
+        - test -f $PREFIX/lib/libmagma_sparse${SHLIB_EXT}        # [unix]
+        - if not exist %LIBRARY_PREFIX%\lib\magma_sparse.lib exit 1    # [win]
+        - if not exist %LIBRARY_PREFIX%\bin\magma_sparse.dll exit 1    # [win]
+        - test ! -f $PREFIX/lib/pkgconfig/magma.pc                 # [unix]
+        - if exist %LIBRARY_PREFIX%\lib\pkgconfig\magma.pc exit 1  # [win]
+    {% for each_header in magma_headers %}
+        - test ! -f $PREFIX/include/magma_{{ each_header }}.h                 # [unix]
+        - if exist %LIBRARY_PREFIX%\include\magma_{{ each_header }}.h exit 1  # [win]
+    {% endfor %}
+    {% for each_header in magmasparse_headers %}
+        - test ! -f $PREFIX/include/magmasparse_{{ each_header }}.h                 # [unix]
+        - if exist %LIBRARY_PREFIX%\include\magmasparse_{{ each_header }}.h exit 1  # [win]
+    {% endfor %}
+    {% for each_header in magmablas_headers %}
+        - test ! -f $PREFIX/include/magmablas_{{ each_header }}.h                 # [unix]
+        - if exist %LIBRARY_PREFIX%\include\magmablas_{{ each_header }}.h exit 1  # [win]
+    {% endfor %}
+
+  - name: magma
+    build:
+      run_exports:
+        - {{ pin_compatible('libmagma', max_pin='x.x.x') }}
+        - {{ pin_subpackage('libmagma_sparse', max_pin='x.x.x') }}
+    requirements:
+      build:
+      # Add cuda compiler here so package picks up correct cuda-version
+        - {{ compiler('cuda') }}
+      host:
+        - libmagma {{ version }}
+        - {{ pin_subpackage('libmagma_sparse', exact=True) }}
+      run:
+        - {{ pin_compatible('libmagma', max_pin='x.x.x') }}
+        - {{ pin_subpackage('libmagma_sparse', exact=True) }}
+    files:
+      - include/magma*  # [unix]
+      - Library\include\magma*  # [win]
+      - lib/pkgconfig/magma.pc  # [unix]
+      - Library\lib\pkgconfig\magma.pc  # [win]
     test:
       commands:
         - test -f $PREFIX/include/magma.h                        # [unix]
