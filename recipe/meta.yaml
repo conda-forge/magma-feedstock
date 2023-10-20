@@ -199,7 +199,7 @@ outputs:
         - libmagma {{ version }}
         - {{ pin_subpackage('libmagma_sparse', exact=True) }}
       run:
-        - {{ pin_compatible('libmagma', exact=True) }}
+        - {{ pin_compatible('libmagma', max_pin='x.x.x') }}
         - {{ pin_subpackage('libmagma_sparse', exact=True) }}
     files:
       - include/magma*  # [unix]
