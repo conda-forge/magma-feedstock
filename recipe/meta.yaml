@@ -192,12 +192,15 @@ outputs:
         - {{ pin_compatible('libmagma', max_pin='x.x.x') }}
         - {{ pin_subpackage('libmagma_sparse', max_pin='x.x.x') }}
     requirements:
+      build:
+      # Add cuda compiler here so package picks up correct cuda-version
+        - {{ compiler('cuda') }}
       host:
-        - libmagma {{ version }}.*
-        - libmagma_sparse {{ version }}.*
+        - libmagma {{ version }}
+        - {{ pin_subpackage('libmagma_sparse', exact=True) }}
       run:
-        - libmagma {{ version }}.*
-        - libmagma_sparse {{ version }}.*
+        - {{ pin_compatible('libmagma', exact=True) }}
+        - {{ pin_subpackage('libmagma_sparse', exact=True) }}
     files:
       - include/magma*  # [unix]
       - Library\include\magma*  # [win]
