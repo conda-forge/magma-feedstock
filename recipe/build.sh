@@ -69,6 +69,7 @@ cmake --build . \
 
 install ./lib/libmagma_sparse.so $PREFIX/lib/libmagma_sparse.so
 
+cd ..
 mkdir $PREFIX/include
 cp -pr ./include/*.h $PREFIX/include
 cp -pr ./sparse/include/*.h $PREFIX/include

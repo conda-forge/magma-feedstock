@@ -59,6 +59,7 @@ cp .\lib\magma_sparse.lib %LIBRARY_PREFIX%\lib\magma_sparse.lib
 cp .\magma_sparse.dll %LIBRARY_PREFIX%\bin\magma_sparse.dll
 if errorlevel 1 exit /b 1
 
+cd ..
 md %LIBRARY_PREFIX%\include
 xcopy /s /k /y .\include\*.h %LIBRARY_PREFIX%\include
 xcopy /s /k /y .\sparse\include\*.h %LIBRARY_PREFIX%\include
