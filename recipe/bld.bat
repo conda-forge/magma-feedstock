@@ -1,8 +1,8 @@
 @echo on
 
 :: This step is required when building from raw source archive
-make generate --jobs %CPU_COUNT%
-if errorlevel 1 exit /b 1
+:: make generate --jobs %CPU_COUNT%
+:: if errorlevel 1 exit /b 1
 
 :: Duplicate lists because of https://bitbucket.org/icl/magma/pull-requests/32
 SET "CUDA_ARCH_LIST=sm_50,sm_60,sm_61,sm_70,sm_75,sm_80"
