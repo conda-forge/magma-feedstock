@@ -8,14 +8,54 @@ jobs:
     vmImage: windows-2022
   strategy:
     matrix:
-      win_64_cuda_compilernvcccuda_compiler_version11.2:
-        CONFIG: win_64_cuda_compilernvcccuda_compiler_version11.2
+      win_64_cuda_compilercuda-nvcccuda_compiler_version12.0python3.10.____cpython:
+        CONFIG: win_64_cuda_compilercuda-nvcccuda_compiler_version12.0python3.10.____cpython
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: win_64_cuda_compilernvcccuda_compil_h6dd062e242
-      win_64_cuda_compilernvcccuda_compiler_version11.8:
-        CONFIG: win_64_cuda_compilernvcccuda_compiler_version11.8
+        SHORT_CONFIG: win_64_cuda_compilercuda-nvcccuda_c_ha337c27456
+      win_64_cuda_compilercuda-nvcccuda_compiler_version12.0python3.11.____cpython:
+        CONFIG: win_64_cuda_compilercuda-nvcccuda_compiler_version12.0python3.11.____cpython
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: win_64_cuda_compilernvcccuda_compil_h6e5578e1e1
+        SHORT_CONFIG: win_64_cuda_compilercuda-nvcccuda_c_hc2fc01a05c
+      win_64_cuda_compilercuda-nvcccuda_compiler_version12.0python3.8.____cpython:
+        CONFIG: win_64_cuda_compilercuda-nvcccuda_compiler_version12.0python3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: win_64_cuda_compilercuda-nvcccuda_c_h54217b9022
+      win_64_cuda_compilercuda-nvcccuda_compiler_version12.0python3.9.____cpython:
+        CONFIG: win_64_cuda_compilercuda-nvcccuda_compiler_version12.0python3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: win_64_cuda_compilercuda-nvcccuda_c_h999497c25e
+      win_64_cuda_compilernvcccuda_compiler_version11.2python3.10.____cpython:
+        CONFIG: win_64_cuda_compilernvcccuda_compiler_version11.2python3.10.____cpython
+        UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: win_64_cuda_compilernvcccuda_compil_h1b044c7331
+      win_64_cuda_compilernvcccuda_compiler_version11.2python3.11.____cpython:
+        CONFIG: win_64_cuda_compilernvcccuda_compiler_version11.2python3.11.____cpython
+        UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: win_64_cuda_compilernvcccuda_compil_hac67cc7264
+      win_64_cuda_compilernvcccuda_compiler_version11.2python3.8.____cpython:
+        CONFIG: win_64_cuda_compilernvcccuda_compiler_version11.2python3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: win_64_cuda_compilernvcccuda_compil_h955331c63f
+      win_64_cuda_compilernvcccuda_compiler_version11.2python3.9.____cpython:
+        CONFIG: win_64_cuda_compilernvcccuda_compiler_version11.2python3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: win_64_cuda_compilernvcccuda_compil_hdb731e02e0
+      win_64_cuda_compilernvcccuda_compiler_version11.8python3.10.____cpython:
+        CONFIG: win_64_cuda_compilernvcccuda_compiler_version11.8python3.10.____cpython
+        UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: win_64_cuda_compilernvcccuda_compil_h200ec4340e
+      win_64_cuda_compilernvcccuda_compiler_version11.8python3.11.____cpython:
+        CONFIG: win_64_cuda_compilernvcccuda_compiler_version11.8python3.11.____cpython
+        UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: win_64_cuda_compilernvcccuda_compil_haec70b9094
+      win_64_cuda_compilernvcccuda_compiler_version11.8python3.8.____cpython:
+        CONFIG: win_64_cuda_compilernvcccuda_compiler_version11.8python3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: win_64_cuda_compilernvcccuda_compil_h36a6ecf873
+      win_64_cuda_compilernvcccuda_compiler_version11.8python3.9.____cpython:
+        CONFIG: win_64_cuda_compilernvcccuda_compiler_version11.8python3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: win_64_cuda_compilernvcccuda_compil_hf10085d904
   timeoutInMinutes: 360
   variables:
     CONDA_BLD_PATH: D:\\bld\\
@@ -47,6 +87,9 @@ jobs:
         PYTHONUNBUFFERED: 1
         CONFIG: $(CONFIG)
         CI: azure
+        flow_run_id: azure_$(Build.BuildNumber).$(System.JobAttempt)
+        remote_url: $(Build.Repository.Uri)
+        sha: $(Build.SourceVersion)
         UPLOAD_PACKAGES: $(UPLOAD_PACKAGES)
         UPLOAD_TEMP: $(UPLOAD_TEMP)
         BINSTAR_TOKEN: $(BINSTAR_TOKEN)
