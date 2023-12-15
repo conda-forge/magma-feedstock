@@ -147,6 +147,7 @@ outputs:
         - llvm-openmp  # [osx]
       host:
     {% if cuda_major == 12 %}
+        - cuda-version {{ cuda_compiler_version }}
         - cuda-cudart-dev
         - cuda-profiler-api
         - libcublas-dev
