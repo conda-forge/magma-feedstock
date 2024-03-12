@@ -101,7 +101,7 @@ source:
       - manual-link.patch
 
 build:
-  number: 2
+  number: 3
   skip: true  # [cuda_compiler_version == "None"]
   skip: true  # [cuda_compiler_version == "10.2"]
   skip: true  # [cuda_compiler_version == "11.0"]
@@ -122,8 +122,8 @@ requirements:
     - ninja
     - python =3
   host:
-{% if cuda_major == 12 %}
     - cuda-version {{ cuda_compiler_version }}
+{% if cuda_major == 12 %}
     - cuda-cudart-dev
     - cuda-profiler-api
     - libcublas-dev
@@ -147,6 +147,7 @@ outputs:
         - libgomp  # [linux]
         - llvm-openmp  # [osx]
       host:
+        - cuda-version {{ cuda_compiler_version }}
     {% if cuda_major == 12 %}
         - cuda-cudart-dev
         - cuda-profiler-api
@@ -197,6 +198,7 @@ outputs:
       # Add cuda compiler here so package picks up correct cuda-version
         - {{ compiler('cuda') }}
       host:
+        - cuda-version {{ cuda_compiler_version }}
         - libmagma {{ version }}
         - {{ pin_subpackage('libmagma_sparse', exact=True) }}
       run:
@@ -234,6 +236,7 @@ outputs:
 
 about:
   home: http://icl.cs.utk.edu/magma/software/index.html
+  dev_url: https://bitbucket.org/icl/magma/src/master/
   summary: Matrix Algebra on GPU and Multicore Architectures
   license: BSD-3-Clause
   license_file: COPYRIGHT

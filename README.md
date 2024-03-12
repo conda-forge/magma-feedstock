@@ -9,6 +9,8 @@ Package license: BSD-3-Clause
 
 Summary: Matrix Algebra on GPU and Multicore Architectures
 
+Development: https://bitbucket.org/icl/magma/src/master/
+
 Current build status
 ====================
 
