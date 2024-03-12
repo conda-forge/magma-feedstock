@@ -122,8 +122,8 @@ requirements:
     - ninja
     - python =3
   host:
-{% if cuda_major == 12 %}
     - cuda-version {{ cuda_compiler_version }}
+{% if cuda_major == 12 %}
     - cuda-cudart-dev
     - cuda-profiler-api
     - libcublas-dev
@@ -147,6 +147,7 @@ outputs:
         - libgomp  # [linux]
         - llvm-openmp  # [osx]
       host:
+        - cuda-version {{ cuda_compiler_version }}
     {% if cuda_major == 12 %}
         - cuda-cudart-dev
         - cuda-profiler-api
@@ -197,6 +198,7 @@ outputs:
       # Add cuda compiler here so package picks up correct cuda-version
         - {{ compiler('cuda') }}
       host:
+        - cuda-version {{ cuda_compiler_version }}
         - libmagma {{ version }}
         - {{ pin_subpackage('libmagma_sparse', exact=True) }}
       run:
