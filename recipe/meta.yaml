@@ -236,6 +236,7 @@ outputs:
 
 about:
   home: http://icl.cs.utk.edu/magma/software/index.html
+  dev_url: https://bitbucket.org/icl/magma/src/master/
   summary: Matrix Algebra on GPU and Multicore Architectures
   license: BSD-3-Clause
   license_file: COPYRIGHT
