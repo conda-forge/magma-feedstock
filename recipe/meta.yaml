@@ -101,7 +101,7 @@ source:
       - manual-link.patch
 
 build:
-  number: 3
+  number: 4
   skip: true  # [cuda_compiler_version == "None"]
   skip: true  # [cuda_compiler_version == "10.2"]
   skip: true  # [cuda_compiler_version == "11.0"]
@@ -112,6 +112,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}
+    - {{ stdlib('c') }}
     - cmake >=3.20
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
