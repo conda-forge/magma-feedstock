@@ -145,6 +145,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - {{ compiler('cuda') }}
+        - {{ stdlib('c') }}
         - libgomp  # [linux]
         - llvm-openmp  # [osx]
       host:
