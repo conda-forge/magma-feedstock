@@ -84,7 +84,7 @@
 
 {% set cuda_major = environ.get("cuda_compiler_version", "11.2").split(".")[0]|int %}
 
-{% set version = "2.7.2" %}
+{% set version = "2.8.0" %}
 
 package:
   name: libmagma-split
@@ -93,19 +93,16 @@ package:
 source:
   - url: https://icl.utk.edu/projectsfiles/magma/downloads/magma-{{ version }}.tar.gz
     sha256: 729bc1a70e518a7422fe7a3a54537a4741035a77be3349f66eac5c362576d560
-  - path: make.inc
-  - patches:
+    patches:
   # Prevent CMake from complaining about unbuilt targets
       - optional-install.patch
   # Prevent CMake from auto-building libmagma in this feedstock
       - manual-link.patch
+  - path: make.inc
 
 build:
-  number: 4
+  number: 0
   skip: true  # [cuda_compiler_version == "None"]
-  skip: true  # [cuda_compiler_version == "10.2"]
-  skip: true  # [cuda_compiler_version == "11.0"]
-  skip: true  # [cuda_compiler_version == "11.1"]
 
 requirements:
   build:
