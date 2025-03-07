@@ -129,6 +129,7 @@ requirements:
 {% endif %}
     - liblapack
     - libblas
+    - nomkl
     - libmagma {{ version }}.*
 
 outputs:
