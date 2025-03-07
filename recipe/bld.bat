@@ -5,27 +5,24 @@
 :: if errorlevel 1 exit /b 1
 
 :: Duplicate lists because of https://bitbucket.org/icl/magma/pull-requests/32
-SET "CUDA_ARCH_LIST=sm_50,sm_60,sm_61,sm_70,sm_75,sm_80"
-SET "CUDAARCHS=50-real;52-real;60-real;61-real;70-real;75-real;80-real"
+set "CUDA_ARCH_LIST=sm_50,sm_60,sm_70,sm_80"
+set "CUDAARCHS=50-virtual;60-virtual;70-virtual;80-virtual"
 
-IF "%cuda_compiler_version%" == "11.0" (
-  SET "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_35"
-  SET "CUDAARCHS=%CUDAARCHS%;35-real;80-virtual"
-)
+if "%cuda_compiler_version%"=="11.2" (
+  set "CUDA_ARCH_LIST=sm_35,%CUDA_ARCH_LIST%"
+  set "CUDAARCHS=%CUDAARCHS%;35-virtual"
 
-IF "%cuda_compiler_version%" == "11.1" (
-  SET "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_35,sm_86"
-  SET "CUDAARCHS=%CUDAARCHS%;35-real;86"
-)
+) else if "%cuda_compiler_version%"=="11.8" (
+  set "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_90"
+  set "CUDAARCHS=%CUDAARCHS%;90-virtual"
 
-IF "%cuda_compiler_version%" == "11.2" (
-  SET "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_35,sm_86"
-  SET "CUDAARCHS=%CUDAARCHS%;35-real;86"
-)
+) else if "%cuda_compiler_version:~0,3%"=="12." (
+  set "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_90"
+  set "CUDAARCHS=%CUDAARCHS%;90-virtual"
 
-IF "%cuda_compiler_version%" == "12.0" (
-  SET "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_86,sm_89,sm_90"
-  SET "CUDAARCHS=%CUDAARCHS%;86-real;89-real;90"
+) else (
+  echo Unsupported CUDA version. Please update build.bat
+  exit /b 1
 )
 
 md build
@@ -44,7 +41,7 @@ cmake %SRC_DIR% ^
   -DGPU_TARGET="%CUDA_ARCH_LIST%" ^
   -DMAGMA_ENABLE_CUDA:BOOL=ON ^
   -DUSE_FORTRAN:BOOL=OFF ^
-  -DCMAKE_CUDA_FLAGS="--use-local-env" ^
+  -DCMAKE_CUDA_FLAGS="--use-local-env -Xfatbin -compress-all" ^
   -DCMAKE_CUDA_SEPARABLE_COMPILATION:BOOL=OFF
 if errorlevel 1 exit /b 1
 

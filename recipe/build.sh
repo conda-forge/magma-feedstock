@@ -3,49 +3,44 @@ set -exv
 # This step is required when building from raw source archive
 # make generate --jobs ${CPU_COUNT}
 
-# Unlike libmagma-feedstock, this feedstock has plenty of time
+# Only about 7 virtual archs can be built 6 hours for CUDA 11
+# Only about 8 archs fit into the default 2GB address space; could use
+# -mcmodel=medium to increase address space
 
 # 11.2 supports archs 3.5 - 8.6
 # 11.8 supports archs 3.5 - 9.0
 # 12.x supports archs 5.0 - 9.0
 
 # Duplicate lists because of https://bitbucket.org/icl/magma/pull-requests/32
-export CUDA_ARCH_LIST="sm_50,sm_52,sm_60,sm_61,sm_70,sm_75,sm_80"
-export CUDAARCHS="50-real;52-real;60-real;61-real;70-real;75-real;80-real"
+# Use the same arches as https://github.com/pytorch/pytorch/blob/07fa6e2c8b003319f85a469307f1b1dd73f6026c/.ci/magma/Makefile#L7
+# Only difference is 37 is replaced with 35.
+
+export CUDA_ARCH_LIST="sm_50,sm_60,sm_70,sm_80"
+export CUDAARCHS="50-real;60-real;70-real;80-real"
 
 if [[ "$cuda_compiler_version" == "11.2" ]]; then
-  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_35"
+  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_35,sm_86"
   export CUDAARCHS="${CUDAARCHS};35-real;86"
+
+elif [[ "$cuda_compiler_version" == "11.8" ]]; then
+  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_35,sm_86,sm_90"
+  export CUDAARCHS="${CUDAARCHS};35-real;86-real;90"
+
+elif [[ "$cuda_compiler_version" == "12."* ]]; then
+  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_86,sm_90"
+  export CUDAARCHS="${CUDAARCHS};86-real;90"
+
+else
+  echo "Unsupported CUDA version. Please update build.sh"
+  exit 1
 fi
-
-if [[ "$cuda_compiler_version" == "11.8" ]]; then
-  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_35,sm_86,sm_89,sm_90"
-  export CUDAARCHS="${CUDAARCHS};35-real;86-real;89-real;90"
-fi
-
-if [[ "$cuda_compiler_version" == "12.0" ]]; then
-  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_86,sm_89,sm_90"
-  export CUDAARCHS="${CUDAARCHS};86-real;89-real;90"
-fi
-
-# Jetsons are ARM devices, so target those minor versions too
-if [[ "$target_platform" == "linux-aarch64" ]]; then
-  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_72,sm_62,sm_53"
-  export CUDAARCHS="${CUDAARCHS};53-real;62-real;72-real"
-  if [[ "$cuda_compiler_version" == "12."* ]]; then
-  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_87"
-  export CUDAARCHS="${CUDAARCHS};87-real"
-  fi
-fi
-
-
-# Remove CXX standard flags added by conda-forge. std=c++11 is required to
-# compile some .cu files
-export CXXFLAGS="${CXXFLAGS//-std=c++17/-std=c++11}"
 
 # Conda-forge nvcc compiler flags environment variable doesn't match CMake environment variable
 # Redirect it so that the flags are added to nvcc calls
 export CUDAFLAGS="${CUDAFLAGS} ${CUDA_CFLAGS}"
+
+# Compress SASS and PTX in the binary to reduce disk usage
+export CUDAFLAGS="${CUDAFLAGS} -Xfatbin -compress-all"
 
 mkdir build
 cd build
@@ -66,6 +61,8 @@ cmake --build . \
     --parallel ${CPU_COUNT} \
     --target magma_sparse \
     --verbose
+
+strip ./lib/libmagma_sparse.so
 
 install ./lib/libmagma_sparse.so $PREFIX/lib/libmagma_sparse.so
 
