@@ -61,22 +61,7 @@ cmake --build . \
     --parallel ${CPU_COUNT} \
     --target magma_sparse \
     --verbose
-
-case "$target_platform" in
-    linux-64)
-        STRIP_CMD="x86_64-conda-linux-gnu-strip"
-        ;;
-    linux-aarch64)
-        STRIP_CMD="aarch64-conda-linux-gnu-strip"
-        ;;
-    linux-ppc64le)
-        STRIP_CMD="powerpc64le-conda-linux-gnu-strip"
-        ;;
-    *)
-        X="unknown"
-        ;;
-esac
-$BUILD_PREFIX/bin/$STRIP_CMD ./lib/libmagma_sparse.so
+$STRIP ./lib/libmagma_sparse.so
 
 install ./lib/libmagma_sparse.so $PREFIX/lib/libmagma_sparse.so
 
