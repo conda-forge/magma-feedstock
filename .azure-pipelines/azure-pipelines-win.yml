@@ -8,14 +8,10 @@ jobs:
     vmImage: windows-2022
   strategy:
     matrix:
-      win_64_cuda_compilercuda-nvcccuda_compiler_version12.6:
-        CONFIG: win_64_cuda_compilercuda-nvcccuda_compiler_version12.6
+      win_64_cuda_compiler_version12.9:
+        CONFIG: win_64_cuda_compiler_version12.9
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: win_64_cuda_compilercuda-nvcccuda_c_h6e2eb0d459
-      win_64_cuda_compilernvcccuda_compiler_version11.8:
-        CONFIG: win_64_cuda_compilernvcccuda_compiler_version11.8
-        UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: win_64_cuda_compilernvcccuda_compil_h6e5578e1e1
+        SHORT_CONFIG: win_64_cuda_compiler_version12.9
   timeoutInMinutes: 360
   variables:
     CONDA_BLD_PATH: D:\\bld\\
