@@ -110,7 +110,7 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}
     - {{ stdlib('c') }}
-    - cmake >=3.20
+    - cmake >=3.20,<4
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
     - m2-coreutils  # [win]
@@ -121,12 +121,10 @@ requirements:
     - python =3
   host:
     - cuda-version {{ cuda_compiler_version }}
-{% if cuda_major == 12 %}
     - cuda-cudart-dev
     - cuda-profiler-api
     - libcublas-dev
     - libcusparse-dev
-{% endif %}
     - liblapack
     - libblas
     - nomkl
@@ -148,12 +146,10 @@ outputs:
         - llvm-openmp  # [osx]
       host:
         - cuda-version {{ cuda_compiler_version }}
-    {% if cuda_major == 12 %}
         - cuda-cudart-dev
         - cuda-profiler-api
         - libcublas-dev
         - libcusparse-dev
-    {% endif %}
         - liblapack
         - libblas
         - libmagma {{ version }}.*
