@@ -23,8 +23,8 @@ if [[ "$cuda_compiler_version" == "11.8" ]]; then
   export CUDAARCHS="${CUDAARCHS};35-real;86-real;90"
 
 elif [[ "$cuda_compiler_version" == "12."* ]]; then
-  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_86,sm_90,sm_100,sm_120"
-  export CUDAARCHS="${CUDAARCHS};86-real;90-real;100-real;120"
+  export CUDA_ARCH_LIST="${CUDA_ARCH_LIST},sm_86,sm_90"
+  export CUDAARCHS="${CUDAARCHS};86-real;90"
 
 else
   echo "Unsupported CUDA version. Please update build.sh"
