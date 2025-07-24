@@ -14,7 +14,7 @@ if "%cuda_compiler_version%"=="11.8" (
 
 ) else if "%cuda_compiler_version:~0,3%"=="12." (
   set "CUDA_ARCH_LIST=%CUDA_ARCH_LIST%,sm_90"
-  set "CUDAARCHS=%CUDAARCHS%;90-virtual
+  set "CUDAARCHS=%CUDAARCHS%;90-virtual"
 
 ) else (
   echo Unsupported CUDA version. Please update build.bat
